@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  {% include 'frontend/shared/header.html' %}
+  <body>
+    {% include 'frontend/shared/navbar.html' %}
+    <main class="flex items-center justify-center px-4 py-16">
+      <div
+        class="grid lg:grid-cols-2 bg-white rounded-3xl overflow-hidden shadow-xl max-w-6xl w-full"
+      >
+        <!-- Left -->
+        <div
+          class="hidden lg:flex bg-indigo-600 p-12 text-white flex-col justify-between"
+        >
+          <div>
+            <span class="bg-white/20 px-4 py-2 rounded-full text-sm">
+              Welcome Back
+            </span>
+
+            <h1 class="text-5xl font-bold leading-tight mt-8">
+              Login to continue shopping.
+            </h1>
+
+            <p class="text-indigo-100 mt-6 text-lg leading-relaxed">
+              Access your saved products, order history, delivery addresses, and
+              secure checkout experience.
+            </p>
+          </div>
+
+          <!-- Features -->
+          <div class="space-y-5">
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl"
+              >
+                🚚
+              </div>
+
+              <div>
+                <h3 class="font-semibold">Fast Delivery</h3>
+                <p class="text-indigo-100 text-sm">
+                  Quick and secure shipping.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl"
+              >
+                🔒
+              </div>
+
+              <div>
+                <h3 class="font-semibold">Secure Payment</h3>
+                <p class="text-indigo-100 text-sm">Protected payment system.</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div
+                class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl"
+              >
+                ⭐
+              </div>
+
+              <div>
+                <h3 class="font-semibold">Premium Products</h3>
+                <p class="text-indigo-100 text-sm">Trusted quality products.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right -->
+        <div class="p-8 md:p-12">
+          <!-- Header -->
+          <div class="mb-8">
+            <p class="text-indigo-600 font-medium">Welcome back</p>
+
+            <h2 class="text-4xl font-bold mt-2">Login to your account</h2>
+
+            <p class="text-gray-500 mt-3">
+              Enter your email and password to continue.
+            </p>
+          </div>
+
+          <!-- Form -->
+          <form class="space-y-5">
+            <!-- Email -->
+            <div>
+              <label class="block font-medium mb-2"> Email Address </label>
+
+              <input
+                type="email"
+                placeholder="alex@example.com"
+                class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition"
+              />
+            </div>
+
+            <!-- Password -->
+            <div>
+              <label class="block font-medium mb-2"> Password </label>
+
+              <input
+                type="password"
+                placeholder="Enter password"
+                class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition"
+              />
+            </div>
+
+            <!-- Remember -->
+            <div class="flex items-center justify-between text-sm">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" class="rounded border-gray-300" />
+                <span>Remember me</span>
+              </label>
+
+              <a href="{{ url_for('forgot_password') }}" class="text-indigo-600 font-medium hover:underline">
+                Forgot password?
+              </a>
+            </div>
+
+            <!-- Login Button -->
+            <button
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition"
+            >
+              Login
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-4 my-8">
+            <div class="flex-1 h-px bg-gray-200"></div>
+
+            <span class="text-gray-400 text-sm"> OR </span>
+
+            <div class="flex-1 h-px bg-gray-200"></div>
+          </div>
+
+          <!-- Social Login -->
+          <div class="space-y-4">
+            <button
+              class="w-full border border-gray-300 hover:border-indigo-600 py-3 rounded-2xl font-medium transition"
+            >
+              Continue with Google
+            </button>
+
+            <button
+              class="w-full border border-gray-300 hover:border-indigo-600 py-3 rounded-2xl font-medium transition"
+            >
+              Continue with Facebook
+            </button>
+          </div>
+
+          <!-- Register -->
+          <p class="text-center text-gray-500 mt-8">
+            Don’t have an account?
+
+            <a href="{{ url_for('create_account') }}" class="text-indigo-600 font-semibold hover:underline">
+              Create Account
+            </a>
+          </p>
+        </div>
+      </div>
+    </main>
+    {% include 'frontend/shared/footer.html' %}
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+{% include 'frontend/shared/header.html' %}
+<body>
+{% include 'frontend/shared/navbar.html' %}
+<section class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Breadcrumb -->
+    <div class="flex items-center gap-2 text-sm text-gray-500 mb-8">
+        <a href="{{ url_for('home') }}" class="hover:text-indigo-600">Home</a>
+        <span>/</span>
+        <a href="{{ url_for('products') }}" class="hover:text-indigo-600">Products</a>
+        <span>/</span>
+        <span class="text-gray-800 font-medium">{{ product.title }}</span>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-10">
+        <!-- LEFT -->
+        <div>
+            <!-- Main Image -->
+            <div class="bg-white rounded-3xl overflow-hidden border relative">
+                <img
+                    src="{{ product.image }}"
+                    class="w-full h-[500px] object-contain p-4"
+                    alt="{{ product.title }}"
+                />
+
+                <span class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+                    {{ product.badge }}
+                </span>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div>
+            <!-- Badge -->
+            <span
+                    class="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-full text-sm font-medium uppercase tracking-wide"
+            >
+            {{ product.category }}
+          </span>
+
+            <!-- Title -->
+            <h1 class="text-4xl font-bold mt-5">{{ product.title }}</h1>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-3 mt-4">
+                <div class="flex text-yellow-400 text-lg">★ {{ product.rating.stars }}</div>
+
+                <span class="text-gray-500"> {{ product.rating.count }} reviews</span>
+            </div>
+
+            <!-- Price -->
+            <div class="flex items-center gap-4 mt-6">
+                <span class="text-4xl font-bold text-indigo-600"> {{ product.price }}$ </span>
+            </div>
+
+            <!-- Description -->
+            <p class="text-gray-600 text-lg leading-relaxed mt-6">
+                {{ product.description }}
+            </p>
+
+            <!-- Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mt-10">
+                <a href="{{ url_for('cart') }}"
+                        class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition flex items-center justify-center"
+                >
+                    Add To Cart
+                </a>
+
+                <a href="{{ url_for('checkout') }}"
+                        class="flex-1 border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-4 rounded-2xl font-medium text-lg transition flex items-center justify-center"
+                >
+                    Buy Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Products -->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-3xl font-bold">Related Products</h2>
+
+            <p class="text-gray-500 mt-2">You may also like these products</p>
+        </div>
+
+        <a href="{{ url_for('products') }}" class="text-indigo-600 font-medium"> View All </a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Product -->
+        {% for product in related_product %}
+            <div class="bg-white rounded-2xl overflow-hidden shadow-sm transform transition duration-300 hover:scale-105 hover:shadow border p-2">
+
+                <!-- Image -->
+                <div class="relative">
+                    <img
+                            src="{{ product.image }}"
+                            alt="{{ product.title }}"
+                            class="w-full h-56 object-contain"
+                    />
+
+                    <!-- Badge -->
+                    <span class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+                        {{ product.badge }}
+                    </span>
+                </div>
+
+                <!-- Content -->
+                <div class="p-5">
+
+                    <!-- Category -->
+                    <p class="text-xs text-gray-500 uppercase tracking-wide">
+                        {{ product.category}}
+                    </p>
+
+                    <!-- Title -->
+                    <h3 class="text-lg font-bold mt-1 line-clamp-1">
+                        {{ product.title }}
+                    </h3>
+
+                    <!-- Description -->
+                    <p class="text-gray-500 text-sm mt-2 line-clamp-2">
+                        {{ product.description }}
+                    </p>
+
+                    <!-- Price -->
+                    <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-bold text-indigo-600">
+                            {{ product.price }}$
+                        </span>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="mt-5 space-y-2">
+
+                        <!-- Add to cart -->
+                        <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition">
+                            Add to Cart
+                        </button>
+
+                        <!-- Show detail -->
+                        <a href="{{ url_for('product', product_id = product.id) }}"
+                           class="w-full block text-center border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-3 rounded-xl font-medium transition">
+                            Show Detail
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% include 'frontend/shared/footer.html' %}
+</body>
+</html>

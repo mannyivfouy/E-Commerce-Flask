@@ -1,0 +1,104 @@
+<nav class="bg-white border-b border-gray-200 shadow-sm">
+  <div class="max-w-full mx-auto px-12">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a class="flex items-center gap-3 cursor-pointer" href="{{ url_for('home') }}">
+        <div
+          class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold"
+        >
+            MS
+        </div>
+
+        <div>
+          <h1 class="text-lg font-bold text-gray-800">MarketStore</h1>
+          <p class="text-xs text-gray-500">Modern Shop</p>
+        </div>
+      </a>
+
+      <!-- Menu -->
+      <ul class="hidden md:flex items-center gap-8">
+        <li>
+          <a
+            href="{{ url_for('home') }}"
+            class="text-gray-700 hover:text-indigo-600 font-medium transition"
+          >
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="{{ url_for('products') }}"
+            class="text-gray-700 hover:text-indigo-600 font-medium transition"
+          >
+            Products
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="{{ url_for('account') }}"
+            class="text-gray-700 hover:text-indigo-600 font-medium transition"
+          >
+            Account
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="{{ url_for('cart') }}"
+            class="text-gray-700 hover:text-indigo-600 font-medium transition"
+          >
+            Cart
+          </a>
+        </li>
+      </ul>
+
+      <!-- Right Side -->
+
+{#      <div class="flex items-center gap-4">#}
+{#        <!-- Search -->#}
+{#        <div#}
+{#          class="hidden lg:flex items-center bg-gray-100 px-3 py-2 rounded-xl"#}
+{#        >#}
+{#          <input#}
+{#            type="text"#}
+{#            placeholder="Search..."#}
+{#            class="bg-transparent outline-none text-sm w-40"#}
+{#          />#}
+{#        </div>#}
+{##}
+{#        <!-- Cart -->#}
+{#        <button class="relative">#}
+{#          <svg#}
+{#            xmlns="http://www.w3.org/2000/svg"#}
+{#            class="w-6 h-6 text-gray-700"#}
+{#            fill="none"#}
+{#            viewBox="0 0 24 24"#}
+{#            stroke="currentColor"#}
+{#          >#}
+{#            <path#}
+{#              stroke-linecap="round"#}
+{#              stroke-linejoin="round"#}
+{#              stroke-width="2"#}
+{#              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1 5h12m-9 0a1 1 0 102 0m6 0a1 1 0 102 0"#}
+{#            />#}
+{#          </svg>#}
+{##}
+{#          <span#}
+{#            class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"#}
+{#          >#}
+{#            2#}
+{#          </span>#}
+{#        </button>#}
+{##}
+{#        <!-- Login Button -->#}
+{#        <button#}
+{#          class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-xl font-medium transition"#}
+{#        >#}
+{#          Login#}
+{#        </button>#}
+{#      </div>#}
+    </div>
+  </div>
+</nav>

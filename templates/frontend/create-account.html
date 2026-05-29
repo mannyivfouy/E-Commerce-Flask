@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'frontend/shared/header.html' %}
+<body>
+{% include 'frontend/shared/navbar.html' %}
+<main class="flex items-center justify-center px-4 py-14">
+
+    <div class="grid lg:grid-cols-2 bg-white rounded-3xl shadow-xl overflow-hidden max-w-6xl w-full">
+
+        <!-- LEFT INFO -->
+        <div class="hidden lg:flex bg-indigo-600 text-white p-12 flex-col justify-between">
+
+            <div>
+
+          <span class="bg-white/20 px-4 py-2 rounded-full text-sm">
+            New Customer
+          </span>
+
+                <h1 class="text-5xl font-bold mt-8 leading-tight">
+                    Create your account and start shopping.
+                </h1>
+
+                <p class="text-indigo-100 mt-6 text-lg">
+                    Save orders, track deliveries, and enjoy faster QR checkout experience.
+                </p>
+
+            </div>
+
+            <!-- Benefits -->
+            <div class="space-y-5">
+
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">
+                        ⚡
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Faster Checkout</h3>
+                        <p class="text-indigo-100 text-sm">Save your details for next time.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">
+                        📦
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Order Tracking</h3>
+                        <p class="text-indigo-100 text-sm">Track your purchases easily.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center text-2xl">
+                        🔒
+                    </div>
+                    <div>
+                        <h3 class="font-semibold">Secure Account</h3>
+                        <p class="text-indigo-100 text-sm">Your data is protected.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT FORM -->
+        <div class="p-8 md:p-12">
+
+            <div class="mb-8">
+
+                <p class="text-indigo-600 font-medium">
+                    New customer
+                </p>
+
+                <h2 class="text-4xl font-bold mt-2">
+                    Create account
+                </h2>
+
+                <p class="text-gray-500 mt-3">
+                    Fill in your details to register a new account.
+                </p>
+
+            </div>
+
+
+            <form class="space-y-5">
+
+                <!-- Name -->
+                <div class="grid md:grid-cols-2 gap-4">
+
+                    <div>
+                        <label class="block font-medium mb-2">
+                            First Name
+                        </label>
+
+                        <input type="text"
+                               placeholder="Alex"
+                               class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                    </div>
+
+                    <div>
+                        <label class="block font-medium mb-2">
+                            Last Name
+                        </label>
+
+                        <input type="text"
+                               placeholder="Morgan"
+                               class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                    </div>
+
+                </div>
+
+
+                <!-- Email -->
+                <div>
+                    <label class="block font-medium mb-2">
+                        Email
+                    </label>
+
+                    <input type="email"
+                           placeholder="alex@example.com"
+                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                </div>
+
+
+                <!-- Password -->
+                <div>
+                    <label class="block font-medium mb-2">
+                        Password
+                    </label>
+
+                    <input type="password"
+                           placeholder="Create password"
+                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div>
+                    <label class="block font-medium mb-2">
+                        Confirm Password
+                    </label>
+
+                    <input type="password"
+                           placeholder="Confirm password"
+                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                </div>
+
+
+                <!-- Submit -->
+                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="flex items-center gap-4 my-8">
+                <div class="flex-1 h-px bg-gray-200"></div>
+                <span class="text-gray-400 text-sm">OR</span>
+                <div class="flex-1 h-px bg-gray-200"></div>
+            </div>
+
+
+            <!-- Login -->
+            <p class="text-center text-gray-500">
+                Already have an account?
+                <a href="{{ url_for('login') }}" class="text-indigo-600 font-semibold hover:underline">
+                    Login
+                </a>
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+{% include 'frontend/shared/footer.html' %}
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  {% include 'frontend/shared/header.html' %}
+  <body>
+    {% include 'frontend/shared/navbar.html' %}
+    <section class="bg-indigo-600 text-white">
+      <div class="max-w-7xl mx-auto px-4 py-14">
+        <div class="grid lg:grid-cols-2 gap-10 items-end">
+          <div>
+            <p class="text-indigo-200 uppercase text-sm tracking-wide">
+              Secure checkout
+            </p>
+
+            <h1 class="text-4xl md:text-5xl font-bold mt-3">
+              Complete your order with QR payment.
+            </h1>
+
+            <p class="text-indigo-100 mt-4 text-lg">
+              Add delivery details, review your order, and confirm payment
+              instantly.
+            </p>
+          </div>
+
+          <div class="bg-white text-gray-800 rounded-2xl p-5">
+            <div class="flex justify-between text-sm font-medium">
+              <span>Cart</span>
+              <span class="text-indigo-600 font-semibold">Checkout</span>
+              <span>Payment</span>
+            </div>
+
+            <div class="mt-3 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div class="h-full w-2/3 bg-indigo-600"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="max-w-7xl mx-auto px-4 py-12">
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- LEFT -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- STEP 1 -->
+          <div class="bg-white border rounded-2xl p-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div
+                class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold"
+              >
+                1
+              </div>
+
+              <div>
+                <p class="text-sm text-gray-500">Delivery</p>
+                <h2 class="text-xl font-bold">Shipping information</h2>
+              </div>
+            </div>
+
+            <form class="grid md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="First name"
+                class="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600"
+              />
+
+              <input
+                type="text"
+                placeholder="Last name"
+                class="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600"
+              />
+
+              <input
+                type="email"
+                placeholder="Email"
+                class="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600"
+              />
+
+              <input
+                type="tel"
+                placeholder="Phone"
+                class="border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600"
+              />
+
+              <textarea
+                rows="4"
+                placeholder="Address"
+                class="md:col-span-2 border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-indigo-600"
+              ></textarea>
+            </form>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="bg-white border rounded-2xl p-6">
+            <div class="flex items-center gap-4 mb-6">
+              <div
+                class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold"
+              >
+                2
+              </div>
+
+              <div>
+                <p class="text-sm text-gray-500">Payment</p>
+                <h2 class="text-xl font-bold">QR code payment</h2>
+              </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 items-center">
+              <!-- QR -->
+              <div class="flex justify-center">
+                <img
+                  class="w-56 h-56"
+                  src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MarketStore%20Payment%20Total%20%241549"
+                  alt="QR Code"
+                />
+              </div>
+
+              <!-- DETAILS -->
+              <div class="space-y-4">
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Amount</span>
+                  <strong>$1,549</strong>
+                </div>
+
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Method</span>
+                  <strong>QR Bank Transfer</strong>
+                </div>
+
+                <div class="flex justify-between">
+                  <span class="text-gray-500">Reference</span>
+                  <strong>MS-2026-1549</strong>
+                </div>
+
+                <p class="text-sm text-gray-500">
+                  Scan the QR code using your banking app to complete payment.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <aside class="bg-white border rounded-2xl p-6 h-fit">
+          <h2 class="text-xl font-bold mb-5">Order Summary</h2>
+
+          <!-- ITEM -->
+          <div class="space-y-4">
+            <div class="flex gap-3 items-center">
+              <img
+                class="w-14 h-14 rounded-lg object-cover"
+                src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=900"
+              />
+
+              <div class="flex-1">
+                <p class="font-semibold">Nova Ultrabook</p>
+                <p class="text-sm text-gray-500">Qty 1</p>
+              </div>
+
+              <strong>$1,199</strong>
+            </div>
+
+            <div class="flex gap-3 items-center">
+              <img
+                class="w-14 h-14 rounded-lg object-cover"
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=900"
+              />
+
+              <div class="flex-1">
+                <p class="font-semibold">Headphones</p>
+                <p class="text-sm text-gray-500">Qty 1</p>
+              </div>
+
+              <strong>$249</strong>
+            </div>
+          </div>
+
+          <!-- TOTAL -->
+          <div class="mt-6 space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span>Subtotal</span>
+              <span>$1,448</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Shipping</span>
+              <span>Free</span>
+            </div>
+
+            <div class="flex justify-between">
+              <span>Tax</span>
+              <span>$101</span>
+            </div>
+
+            <hr />
+
+            <div class="flex justify-between text-lg font-bold">
+              <span>Total</span>
+              <span class="text-indigo-600">$1,549</span>
+            </div>
+          </div>
+
+          <!-- ACTION -->
+          <a href="{{ url_for('checkout') }}"
+            class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium block flex justify-center items-center"
+          >
+            Confirm Order
+          </a>
+
+          <a
+            href="{{ url_for('cart') }}"
+            class="block text-center w-full mt-3 border border-gray-300 py-3 rounded-xl font-medium"
+          >
+            Back to Cart
+          </a>
+
+          <p class="text-xs text-gray-500 text-center mt-4">
+            Secure checkout with encrypted payment
+          </p>
+        </aside>
+      </div>
+    </section>
+    {% include 'frontend/shared/footer.html' %}
+  </body>
+</html>

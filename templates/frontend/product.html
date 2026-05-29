@@ -61,7 +61,7 @@
 
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                <a href="{{ url_for('cart') }}"
+                <a href="{{ url_for('cart', product_id = product.id) }}"
                         class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition flex items-center justify-center"
                 >
                     Add To Cart
@@ -135,11 +135,6 @@
 
                     <!-- Buttons -->
                     <div class="mt-5 space-y-2">
-
-                        <!-- Add to cart -->
-                        <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium transition">
-                            Add to Cart
-                        </button>
 
                         <!-- Show detail -->
                         <a href="{{ url_for('product', product_id = product.id) }}"

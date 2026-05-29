@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, make_response
 from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
+import json
 
 app = Flask(__name__)
 
@@ -22,7 +23,35 @@ def product(product_id):
 
 @app.route('/cart')
 def cart():
-	return render_template('frontend/cart.html')
+	product_id = request.args.get('product_id')
+	cart_list = request.cookies.get('cart_list')
+	cart_list = json.loads(cart_list) if cart_list else []
+
+	if product_id:
+		duplicated_product_id = [item['id'] for item in cart_list]
+		if product_id in duplicated_product_id:
+			for item in cart_list:
+				if item['id'] == product_id:
+					item['qty'] += 1
+		else:
+			cart_list.append({"id": product_id, "qty": 1})
+	elif not product_id or product_id == '':
+		pass
+
+	# map data
+	for item in cart_list:
+		item['image'] = get_product_by_id(item['id'])['image']
+		item['title'] = get_product_by_id(item['id'])['title']
+		item['price'] = get_product_by_id(item['id'])['price']
+		item['category'] = get_product_by_id(item['id'])['category']
+		item['description'] = get_product_by_id(item['id'])['description']
+
+	response = make_response(render_template('frontend/cart.html', cart_list=cart_list))
+	response.set_cookie('cart_list', json.dumps(cart_list))
+	return response
+
+
+
 
 @app.route('/checkout')
 def checkout():

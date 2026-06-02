@@ -1,4 +1,5 @@
 from product import products
+import json
 
 def get_product_by_id(product_id):
 	for product in products:

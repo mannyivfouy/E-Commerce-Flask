@@ -5,7 +5,6 @@ import json
 
 app = Flask(__name__)
 
-
 @app.route('/')
 @app.route('/home')
 def home():
@@ -24,17 +23,39 @@ def product(product_id):
 @app.route('/cart')
 def cart():
 	product_id = request.args.get('product_id')
+	action = request.args.get('action')
+
 	cart_list = request.cookies.get('cart_list')
 	cart_list = json.loads(cart_list) if cart_list else []
 
 	if product_id:
 		duplicated_product_id = [item['id'] for item in cart_list]
-		if product_id in duplicated_product_id:
+
+		if action == 'remove':
+			cart_list = [item for item in cart_list if item['id'] != product_id]
+
+		elif action == 'increase':
 			for item in cart_list:
 				if item['id'] == product_id:
 					item['qty'] += 1
+					break
+
+		elif action == 'decrease':
+			for item in cart_list:
+				if item['id'] == product_id:
+					if item['qty'] > 0:
+						item['qty'] -= 1
+					else:
+						item['qty'] = 1
+
 		else:
-			cart_list.append({"id": product_id, "qty": 1})
+			if product_id in duplicated_product_id:
+				for item in cart_list:
+					if item['id'] == product_id:
+						item['qty'] += 1
+			else:
+				cart_list.append({'id': product_id, 'qty': 1})
+
 	elif not product_id or product_id == '':
 		pass
 
@@ -49,10 +70,6 @@ def cart():
 	response = make_response(render_template('frontend/cart.html', cart_list=cart_list))
 	response.set_cookie('cart_list', json.dumps(cart_list))
 	return response
-
-
-
-
 @app.route('/checkout')
 def checkout():
 	return render_template('frontend/checkout.html')

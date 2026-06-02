@@ -68,20 +68,18 @@
                     <div class="flex-1">
                         <p class="text-sm text-gray-500">{{ item.category }}</p>
                         <h3 class="text-lg font-bold">{{ item.title }}</h3>
-                        <p class="text-gray-500 text-sm mt-1">
+                        <p class="text-gray-500 text-sm mt-1 ">
                             {{ item.description }}
                         </p>
 
                         <div class="flex items-center gap-4 mt-4">
-                            <div
-                                    class="flex items-center border rounded-xl overflow-hidden"
-                            >
-                                <button class="px-3 py-1">-</button>
-                                <span class="px-4">1</span>
-                                <button class="px-3 py-1">+</button>
+                            <div class="flex items-center border rounded-xl overflow-hidden">
+                                <a href="/cart?product_id={{ item.id }}&action=decrease" class="px-3 py-1">-</a>
+                                <span class="px-4">{{ item.qty }}</span>
+                                <a href="/cart?product_id={{ item.id }}&action=increase" class="px-3 py-1">+</a>
                             </div>
 
-                            <button class="text-red-500 font-medium">Remove</button>
+                            <a href="/cart?product_id={{ item.id }}&action=remove" class="text-red-500 font-medium">Remove</a>
                         </div>
                     </div>
 

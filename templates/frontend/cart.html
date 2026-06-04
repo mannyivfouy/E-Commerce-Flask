@@ -47,7 +47,7 @@
             >
                 <div>
                     <p class="text-sm text-gray-500">Items</p>
-                    <h2 class="text-xl font-bold">2 products in cart</h2>
+                    <h2 class="text-xl font-bold"> {{ cart_list | length }} products in cart</h2>
                 </div>
 
                 <a href="{{ url_for('products') }}" class="text-indigo-600 font-medium hover:underline">
@@ -125,7 +125,7 @@
             <div class="space-y-3 text-sm">
                 <div class="flex justify-between">
                     <span>Subtotal</span>
-                    <span>$1,448</span>
+                    <span>${{ "%.2f" | format(total) }}</span>
                 </div>
 
                 <div class="flex justify-between">
@@ -138,16 +138,11 @@
                     <span>Free</span>
                 </div>
 
-                <div class="flex justify-between">
-                    <span>Tax</span>
-                    <span>$101</span>
-                </div>
-
                 <hr/>
 
                 <div class="flex justify-between text-lg font-bold">
                     <span>Total</span>
-                    <span class="text-indigo-600">$1,549</span>
+                    <span class="text-indigo-600">${{ "%.2f" | format(total) }}</span>
                 </div>
             </div>
 

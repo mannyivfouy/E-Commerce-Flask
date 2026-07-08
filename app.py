@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, make_response
+from flask import Flask, render_template, request, make_response, redirect
 from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
 import json
@@ -79,6 +79,8 @@ def checkout():
 	cart_list = request.cookies.get('cart_list')
 	cart_list = json.loads(cart_list) if cart_list else []
 
+	if not cart_list:
+		return redirect('/cart')
 	#total price
 	total = 0
 	for item in cart_list:
@@ -92,7 +94,7 @@ def do_checkout():
 	cart_list = json.loads(cart_list) if cart_list else []
 	str_list = ""
 	for item in cart_list:
-		str_list += f"<code>{item['title']} ({item['qty']} x {item['price']})</code> \n"
+		str_list += f"<code>{item['title']} ({item['qty']} x ${item['price']})</code> \n"
 
 	form = request.form
 	firstName = form['firstName']
@@ -158,6 +160,14 @@ def forgot_password():
 @app.route('/account')
 def account():
 	return render_template('frontend/account.html')
+
+@app.get('/admin/dashboard')
+def dashboard():
+	return render_template('admin/index.html')
+
+@app.get('/admin/users')
+def users():
+	return render_template('admin/users.html')
 
 if __name__ == '__main__':
 	app.run()

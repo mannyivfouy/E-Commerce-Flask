@@ -161,13 +161,19 @@ def forgot_password():
 def account():
 	return render_template('frontend/account.html')
 
-@app.get('/admin/dashboard')
+@app.get('/admin')
 def dashboard():
-	return render_template('admin/index.html')
+	module = 'dashboard'
+	return render_template('admin/index.html', module = module)
 
 @app.get('/admin/users')
 def users():
-	return render_template('admin/users.html')
+	module = 'users'
+	return render_template('admin/users.html', module = module)
+
+@app.route("/test")
+def test():
+    return '<img src="/static/assets/images/avatar/avatar-3.jpg">'
 
 if __name__ == '__main__':
 	app.run()

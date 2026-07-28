@@ -1,0 +1,35 @@
+{% extends 'admin/master.html' %}
+
+{% block content %}
+    <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+            <div class="page-heading">
+                <div class="page-heading-copy">
+                    <span class="page-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+                    <div>
+                        <p class="eyebrow mb-1">Management</p>
+                        <h1 class="h3 mb-1">Add User</h1>
+                        <p class="text-muted mb-0">Create a new user account with role and team assignments.</p>
+                    </div>
+                </div>
+                <div class="heading-actions"><a class="btn btn-outline-secondary btn-sm"
+                                                href="{{ url_for('users') }}"><i
+                        class="bi bi-arrow-left" aria-hidden="true"></i> Back to Users</a></div>
+            </div>
+
+            <section class="row g-3">
+                <div class="col-12">
+                    <form method="post" action="#" class="panel needs-validation" novalidate>
+                        <p>Are you sure you want to delete this user?</p>
+                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-4"><a
+                                class="btn btn-outline-secondary" href="{{ url_for('users') }}">Cancel</a>
+                            <button class="btn btn-danger" type="submit"><i class="bi bi-trash-fill"
+                                                                            aria-hidden="true"></i> Delete
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}

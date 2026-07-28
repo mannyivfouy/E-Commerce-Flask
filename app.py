@@ -166,14 +166,25 @@ def dashboard():
 	module = 'dashboard'
 	return render_template('admin/dashboard/dashboard.html', module = module)
 
-@app.get('/admin/users')
+@app.get('/admin/user')
 def users():
 	module = 'users'
 	return render_template('admin/user/user.html', module = module)
 
-@app.route("/test")
-def test():
-    return '<img src="/static/assets/images/avatar/avatar-3.jpg">'
+@app.get('/admin/user/add')
+def add_user():
+	module = 'users'
+	return render_template('admin/user/add.html', module = module)
+
+@app.get('/admin/user/edit/<int:user_id>')
+def edit_user(user_id):
+	module = 'users'
+	return render_template('admin/user/edit.html', module = module, user_id = user_id)
+
+@app.get('/admin/user/confirm-delete/<int:user_id>')
+def confirm_delete_user(user_id):
+	module = 'users'
+	return render_template('admin/user/confirm_delete.html', module = module, user_id = user_id)
 
 if __name__ == '__main__':
 	app.run()

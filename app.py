@@ -164,12 +164,12 @@ def account():
 @app.get('/admin')
 def dashboard():
 	module = 'dashboard'
-	return render_template('admin/dashboard/dashboard.html', module = module)
+	return render_template('admin/index.html', module = module)
 
 @app.get('/admin/users')
 def users():
 	module = 'users'
-	return render_template('admin/user/users.html', module = module)
+	return render_template('admin/users.html', module = module)
 
 @app.route("/test")
 def test():

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'admin/shared/header.html' %}
+<body>
+<div class="admin-shell">
+    <div class="sidebar-backdrop" data-sidebar-close></div>
+
+    {% include 'admin/shared/sidebar.html' %}
+
+    <div class="admin-main">
+        {% include 'admin/shared/navbar.html' %}
+
+        {% block content %}{% endblock %}
+
+        {% include 'admin/shared/footer.html' %}
+    </div>
+</div>
+
+{% include 'admin/shared/script.html' %}
+</body>
+</html>

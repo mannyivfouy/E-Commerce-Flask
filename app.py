@@ -5,6 +5,7 @@ import json
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy import text
 
 app = Flask(__name__)
 
@@ -16,9 +17,11 @@ migrate = Migrate(app, db)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    profile = db.Column(db.String)
     username = db.Column(db.String(80), nullable=False)
     password = db.Column(db.String(80), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
+    role = db.Column(db.String(120), nullable=False)
 
 @app.route('/')
 @app.route('/home')
@@ -184,7 +187,10 @@ def dashboard():
 @app.get('/admin/user')
 def users():
 	module = 'users'
-	return render_template('admin/user/user.html', module = module)
+	sql = text("select * from user")
+	result = db.session.execute(sql)
+	rows = [dict(row._mapping) for row in result]
+	return render_template('admin/user/user.html', module = module, users = rows)
 
 @app.get('/admin/user/add')
 def add_user():

@@ -97,46 +97,48 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Profile</th>
-                            <th scope="col">User</th>
+                            <th scope="col">Username</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Role</th>
-                            <th scope="col">Team</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Joined</th>
                             <th scope="col" class="text-end">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                <img
-                                        src="{{ url_for('static', filename='assets/images/avatar/avatar-3.jpg') }}"
-                                        alt="Profile"
-                                        class="rounded-circle object-fit-cover"
-                                        width="40"
-                                        height="40">
-                            </td>
-                            <td>Dara</td>
-                            <td>Admin</td>
-                            <td>Operations</td>
-                            <td><span class="badge text-bg-success">Active</span></td>
-                            <td>Jan 12, 2026</td>
-                            <td class="text-end gap-3">
-                                <div class="gap-3">
-                                    <a class="btn btn-warning btn-sm"
-                                       href="{{ url_for('edit_user', user_id=1) }}">Edit</a>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>
+                                    <img
+                                            src="{{ user.profile }}"
+                                            alt="Profile"
+                                            class="rounded-circle object-fit-cover"
+                                            width="40"
+                                            height="40"
+                                            onerror="this.onerror=null;
+                                                    this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+                                    >
 
-                                    <a class="btn btn-danger btn-sm"
-                                       href="{{ url_for('confirm_delete_user', user_id=1) }}"> Delete</a>
-                                </div>
+                                </td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.role }}</td>
+                                <td class="text-end gap-3">
+                                    <div class="gap-3">
+                                        <a class="btn btn-warning btn-sm"
+                                           href="{{ url_for('edit_user', user_id=1) }}">Edit</a>
 
-                            </td>
-                        </tr>
+                                        <a class="btn btn-danger btn-sm"
+                                           href="{{ url_for('confirm_delete_user', user_id=1) }}"> Delete</a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-3">
-                    <p class="text-muted small mb-0">Showing 1 to 5 of 124 users</p>
+                    {#                    <p class="text-muted small mb-0">Showing 1 to 5 of 124 users</p>#}
                     <nav aria-label="Users pagination">
                         <ul class="pagination pagination-sm mb-0">
                             <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>

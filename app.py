@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, make_response, redirect
+from flask import Flask, render_template, request, make_response, redirect, url_for, request
 from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
 import json
@@ -192,20 +192,78 @@ def users():
 	rows = [dict(row._mapping) for row in result]
 	return render_template('admin/user/user.html', module = module, users = rows)
 
-@app.get('/admin/user/add')
-def add_user():
-	module = 'users'
-	return render_template('admin/user/add.html', module = module)
-
 @app.get('/admin/user/edit/<int:user_id>')
 def edit_user(user_id):
 	module = 'users'
-	return render_template('admin/user/edit.html', module = module, user_id = user_id)
+	sql = text("select * from user where id = :user_id")
+	result = db.session.execute(sql, {'user_id': user_id}).fetchone();
+	user = None
+	if result:
+		user = dict(result._mapping)
+	else:
+		return redirect(url_for("users"));
+	return render_template('admin/user/edit.html', module = module, user = user)
+
+@app.post('/admin/user/edit')
+def do_edit_user():
+	module = 'users'
+	form = request.form
+	user = User.query.get(form.get('user_id'))
+	user.username = form.get('username')
+	user.email = form.get('email')
+	user.password = form.get('password')
+	user.profile = 'New Profile Upload'
+	user.role = form.get('role')
+	db.session.commit()
+
+	return redirect(url_for("users"))
+
+@app.get('/admin/user/add')
+def add_user():
+    module = 'users'
+
+    return render_template(
+        'admin/user/add.html',
+        module=module
+    )
+
+@app.post('/admin/user/add')
+def do_add_user():
+	module = 'users'
+	form = request.form
+	user = User()
+	user.username = form.get('username')
+	user.email = form.get('email')
+	user.password = form.get('password')
+	user.profile = 'New Profile Upload'
+	user.role = form.get('role')
+	db.session.add(user)
+	db.session.commit()
+	return redirect(url_for("users"))
 
 @app.get('/admin/user/confirm-delete/<int:user_id>')
 def confirm_delete_user(user_id):
 	module = 'users'
-	return render_template('admin/user/confirm_delete.html', module = module, user_id = user_id)
+	sql = text("select * from user where id = :user_id")
+	result = db.session.execute(sql, {'user_id': user_id}).fetchone();
+	user = None
+	if result:
+		user = dict(result._mapping)
+	else:
+		return redirect(url_for("users"));
+	return render_template('admin/user/confirm_delete.html', module = module, user = user)
+
+@app.post('/admin/user/delete')
+def delete_user():
+	module = 'users'
+	form = request.form
+	user_id = form.get('user_id')
+	user = User.query.get(user_id)
+	if not user:
+		return redirect(url_for("users"));
+	db.session.delete(user)
+	db.session.commit()
+	return redirect(url_for("users"));
 
 if __name__ == '__main__':
 	app.run()

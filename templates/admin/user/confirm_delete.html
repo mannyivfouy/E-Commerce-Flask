@@ -1,35 +1,129 @@
+
 {% extends 'admin/master.html' %}
 
 {% block content %}
     <main class="dashboard-content">
         <div class="container-fluid px-3 px-lg-4 py-4">
+
+            <!-- Page Heading -->
             <div class="page-heading">
                 <div class="page-heading-copy">
-                    <span class="page-icon"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+                <span class="page-icon">
+                    <i class="bi bi-person-x" aria-hidden="true"></i>
+                </span>
+
                     <div>
                         <p class="eyebrow mb-1">Management</p>
-                        <h1 class="h3 mb-1">Add User</h1>
-                        <p class="text-muted mb-0">Create a new user account with role and team assignments.</p>
+                        <h1 class="h3 mb-1">Delete User</h1>
+                        <p class="text-muted mb-0">
+                            Review the user information before deleting this account.
+                        </p>
                     </div>
                 </div>
-                <div class="heading-actions"><a class="btn btn-outline-secondary btn-sm"
-                                                href="{{ url_for('users') }}"><i
-                        class="bi bi-arrow-left" aria-hidden="true"></i> Back to Users</a></div>
+
+                <div class="heading-actions">
+                    <a class="btn btn-outline-secondary btn-sm"
+                       href="{{ url_for('users') }}">
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        Back to Users
+                    </a>
+                </div>
             </div>
 
+            <!-- Confirmation -->
             <section class="row g-3">
-                <div class="col-12">
-                    <form method="post" action="#" class="panel needs-validation" novalidate>
-                        <p>Are you sure you want to delete this user?</p>
-                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-4"><a
-                                class="btn btn-outline-secondary" href="{{ url_for('users') }}">Cancel</a>
-                            <button class="btn btn-danger" type="submit"><i class="bi bi-trash-fill"
-                                                                            aria-hidden="true"></i> Delete
-                            </button>
+                <div class="col-12 col-md-8 col-lg-6 mx-auto">
+
+                    <div class="panel">
+
+                        <!-- Warning -->
+                        <div class="text-center mb-4">
+                            <div class="text-danger mb-3">
+                                <i class="bi bi-exclamation-triangle-fill"
+                                   style="font-size: 3rem;"></i>
+                            </div>
+
+                            <h4 class="mb-2">Delete this user?</h4>
+
+                            <p class="text-muted mb-0">
+                                This action cannot be undone.
+                            </p>
                         </div>
-                    </form>
+
+                        <!-- User Information -->
+                        <div class="border rounded p-3 bg-light">
+
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                    <img
+                                            src="{{ url_for('static', filename='assets/images/avatar') }}/{{ user.profile }}"
+                                            alt="{{ user.username }}"
+                                            class="rounded-circle object-fit-cover"
+                                            style="width: 60px; height: 60px;"
+                                            onerror="this.onerror=null;
+                                                    this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+                                    >
+
+                                <div>
+                                    <h5 class="mb-0">
+                                        {{ user.fullname }}
+                                    </h5>
+
+                                    <small class="text-muted">
+                                        @{{ user.username }}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-12">
+                                    <small class="text-muted d-block">
+                                        Email
+                                    </small>
+                                    <span>{{ user.email }}</span>
+                                </div>
+
+                                <div class="col-6">
+                                    <small class="text-muted d-block">
+                                        User ID
+                                    </small>
+                                    <span>{{ user.id }}</span>
+                                </div>
+
+                                <div class="col-6">
+                                    <small class="text-muted d-block">
+                                        Role
+                                    </small>
+                                    <span>{{ user.role }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex flex-wrap justify-content-end
+                                gap-2 mt-4">
+
+                            <a class="btn btn-outline-secondary"
+                               href="{{ url_for('users') }}">
+                                Cancel
+                            </a>
+
+                            <form method="post"
+                                  action="{{ url_for('delete_user', user_id=user.id) }}">
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                <button class="btn btn-danger" type="submit">
+                                    <i class="bi bi-trash-fill"
+                                       aria-hidden="true"></i>
+                                    Delete User
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </section>
+
         </div>
     </main>
 {% endblock %}
+

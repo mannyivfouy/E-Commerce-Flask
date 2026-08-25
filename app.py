@@ -1,7 +1,10 @@
+from fcntl import FASYNC
+
 from flask import Flask, render_template, request, make_response, redirect, url_for, request
 from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
 import json
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -19,7 +22,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     profile = db.Column(db.String)
     username = db.Column(db.String(80), nullable=False)
-    password = db.Column(db.String(80), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
     role = db.Column(db.String(120), nullable=False)
 
@@ -211,9 +214,11 @@ def do_edit_user():
 	user = User.query.get(form.get('user_id'))
 	user.username = form.get('username')
 	user.email = form.get('email')
-	user.password = form.get('password')
 	user.profile = 'New Profile Upload'
 	user.role = form.get('role')
+
+	if form.get('password') is not None and form.get('password') != "" :
+		user.password = generate_password_hash(form.get('password'))
 	db.session.commit()
 
 	return redirect(url_for("users"))
@@ -231,12 +236,14 @@ def add_user():
 def do_add_user():
 	module = 'users'
 	form = request.form
-	user = User()
-	user.username = form.get('username')
-	user.email = form.get('email')
-	user.password = form.get('password')
-	user.profile = 'New Profile Upload'
-	user.role = form.get('role')
+	password = generate_password_hash(form['password'])
+	user = User(
+		username = form.get('username'),
+		email = form.get('email'),
+		password = password,
+		role = form.get('role'),
+		profile = form.get('profile')
+	)
 	db.session.add(user)
 	db.session.commit()
 	return redirect(url_for("users"))

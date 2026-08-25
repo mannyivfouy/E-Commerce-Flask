@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'admin/shared/header.html' %}
+
+<body class="auth-body">
+<button class="icon-button theme-toggle auth-theme-toggle" type="button" data-theme-toggle
+        aria-label="Switch color theme" title="Switch color theme">
+    <i class="bi bi-moon-stars" data-theme-icon aria-hidden="true"></i>
+</button>
+<main class="auth-page">
+    <section class="auth-card">
+        <a class="auth-brand" href="index.html"><span class="brand-icon"><i class="bi bi-grid-1x2-fill"
+                                                                            aria-hidden="true"></i></span><span><strong>adminHMD</strong><small>Sign in to your admin workspace.</small></span></a>
+        <form class="needs-validation" novalidate
+              action="{{ url_for('admin_do_login') }}" novalidate
+              method="POST">
+
+            <div class="mb-4">
+                <p class="eyebrow mb-1">Secure Access</p>
+                <h1 class="h3 mb-1">Login</h1>
+                <p class="text-muted mb-0">Sign in to your admin workspace.</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" id="username" type="text" name="username" required>
+            </div>
+            <div class="mb-3">
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="loginPassword">Password</label>
+                    <a class="small fw-semibold" href="forgot-password.html">
+                        Forgot?
+                    </a>
+                </div>
+                <input class="form-control" id="loginPassword" type="password" name="password" required>
+            </div>
+            <button class="btn btn-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right"
+                                                                   aria-hidden="true"></i> Sign In
+            </button>
+        </form>
+    </section>
+</main>
+
+{% include 'admin/shared/script.html' %}
+</body>
+</html>

@@ -1,12 +1,14 @@
 from fcntl import FASYNC
 
-from flask import Flask, render_template, request, make_response, redirect, url_for, request
+from flask import Flask, render_template, request, make_response, redirect, url_for, request, session
 from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 import os
+from datetime import timedelta
+from functools import wraps
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -17,6 +19,9 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydb.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+app.config["SECRET_KEY"] = "change-this"
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(minutes=1440)
+
 UPLOAD_DIR = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_DIR,exist_ok=True)
 ALLOWED_EXISTS = {"png", "jpg", "jpeg", "gif"}
@@ -25,6 +30,14 @@ def allowed(name):
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+def login_required(view):
+	@wraps(view)
+	def wrapped(*args, **kwargs):
+		if not session.get('is_login'):
+			return redirect(url_for("admin_login", next=request.path))
+		return view(*args, **kwargs)
+	return wrapped
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -190,12 +203,18 @@ def forgot_password():
 def account():
 	return render_template('frontend/account.html')
 
+# Admin Panel
+
 @app.get('/admin')
+@login_required	
 def dashboard():
 	module = 'dashboard'
+	# if not session.get('is_login'):
+	# 	return redirect(url_for('admin_login'))
 	return render_template('admin/dashboard/dashboard.html', module = module)
 
 @app.get('/admin/user')
+@login_required
 def users():
 	module = 'users'
 	sql = text("select * from user")
@@ -204,6 +223,7 @@ def users():
 	return render_template('admin/user/user.html', module = module, users = rows)
 
 @app.get('/admin/user/edit/<int:user_id>')
+@login_required
 def edit_user(user_id):
 	module = 'users'
 	sql = text("select * from user where id = :user_id")
@@ -216,6 +236,7 @@ def edit_user(user_id):
 	return render_template('admin/user/edit.html', module = module, user = user)
 
 @app.post('/admin/user/edit')
+@login_required
 def do_edit_user():
     module = 'users'
     form = request.form
@@ -247,6 +268,7 @@ def do_edit_user():
     return redirect(url_for("users"))
 
 @app.get('/admin/user/add')
+@login_required
 def add_user():
     module = 'users'
 
@@ -256,6 +278,7 @@ def add_user():
     )
 
 @app.post('/admin/user/add')
+@login_required
 def do_add_user():
 	module = 'users'
 	form = request.form
@@ -277,6 +300,7 @@ def do_add_user():
 	return redirect(url_for("users"))
 
 @app.get('/admin/user/confirm-delete/<int:user_id>')
+@login_required
 def confirm_delete_user(user_id):
 	module = 'users'
 	sql = text("select * from user where id = :user_id")
@@ -289,6 +313,7 @@ def confirm_delete_user(user_id):
 	return render_template('admin/user/confirm_delete.html', module = module, user = user)
 
 @app.post('/admin/user/delete')
+@login_required
 def delete_user():
 	module = 'users'
 	form = request.form
@@ -299,6 +324,52 @@ def delete_user():
 	db.session.delete(user)
 	db.session.commit()
 	return redirect(url_for("users"));
+
+@app.get('/admin/login')
+def admin_login():
+	module = 'login'
+	return render_template('admin/login.html', module = module)
+
+@app.post('/admin/login')
+def admin_do_login():
+	module = 'login'
+	form = request.form
+	username = form.get('username').strip()
+	password = form.get('password')
+
+	sql = text("SELECT * FROM user WHERE username = :username")
+	user = db.session.execute(sql, {'username': username}).fetchone()
+
+	if user:
+		if check_password_hash(user[3], password):
+			session.clear()
+			session['is_login'] = True
+			session['user_id'] = user[0]
+			session['profile'] = user[1]
+			session['username'] = user[2]
+			session['password'] = user[3]
+			session['email'] = user[4]
+			session['role'] = user[5]
+			return redirect(url_for("dashboard"))
+	else:
+		return redirect(url_for("admin_login")	)
+
+	return redirect(url_for("dashboard"))
+
+
+
+
+
+# @app.before_request
+# def before_request():
+# 	path = request.path
+# 	if 'admin' in path:
+# 		if session.get('is_login'):
+# 			return redirect(url_for('dashboard'))
+# 		else:
+# 			return redirect(url_for('admin_login'))
+# 	return None
+
 
 if __name__ == '__main__':
 	app.run()

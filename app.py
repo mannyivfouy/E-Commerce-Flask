@@ -217,24 +217,34 @@ def edit_user(user_id):
 
 @app.post('/admin/user/edit')
 def do_edit_user():
-	module = 'users'
-	form = request.form
-	file = request.files['profile']
-	if file and allowed(file.filename):
-		filename = secure_filename(file.filename)
-		file.save(os.path.join(UPLOAD_DIR, filename))
+    module = 'users'
+    form = request.form
+    file = request.files.get('profile')
 
-	user = User.query.get(form.get('user_id'))
-	user.username = form.get('username')
-	user.email = form.get('email')
-	user.profile = filename
-	user.role = form.get('role')
+    user = User.query.get(form.get('user_id'))
 
-	if form.get('password') is not None and form.get('password') != "" :
-		user.password = generate_password_hash(form.get('password'))
-	db.session.commit()
+    if not user:
+        return redirect(url_for("users"))
 
-	return redirect(url_for("users"))
+    user.username = form.get('username')
+    user.email = form.get('email')
+    user.role = form.get('role')
+
+    # Only update profile if a new image was uploaded
+    if file and file.filename and allowed(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_DIR, filename))
+        user.profile = filename
+
+    # Only update password if user entered a new one
+    password = form.get('password')
+
+    if password:
+        user.password = generate_password_hash(password)
+
+    db.session.commit()
+
+    return redirect(url_for("users"))
 
 @app.get('/admin/user/add')
 def add_user():

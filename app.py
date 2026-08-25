@@ -5,6 +5,8 @@ from product import products as pro
 from helper import  get_product_by_id, get_product_by_category
 import json
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+import os
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -14,6 +16,12 @@ app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///mydb.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+UPLOAD_DIR = os.path.join("static", "uploads")
+os.makedirs(UPLOAD_DIR,exist_ok=True)
+ALLOWED_EXISTS = {"png", "jpg", "jpeg", "gif"}
+def allowed(name):
+	return "." in name and name.rsplit(".", 1)[1].lower() in ALLOWED_EXISTS
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -211,10 +219,15 @@ def edit_user(user_id):
 def do_edit_user():
 	module = 'users'
 	form = request.form
+	file = request.files['profile']
+	if file and allowed(file.filename):
+		filename = secure_filename(file.filename)
+		file.save(os.path.join(UPLOAD_DIR, filename))
+
 	user = User.query.get(form.get('user_id'))
 	user.username = form.get('username')
 	user.email = form.get('email')
-	user.profile = 'New Profile Upload'
+	user.profile = filename
 	user.role = form.get('role')
 
 	if form.get('password') is not None and form.get('password') != "" :
@@ -236,13 +249,18 @@ def add_user():
 def do_add_user():
 	module = 'users'
 	form = request.form
+	file = request.files['profile']
+	if file and allowed(file.filename):
+		filename = secure_filename(file.filename)
+		file.save(os.path.join(UPLOAD_DIR, filename))
+
 	password = generate_password_hash(form['password'])
 	user = User(
 		username = form.get('username'),
 		email = form.get('email'),
 		password = password,
 		role = form.get('role'),
-		profile = form.get('profile')
+		profile = filename
 	)
 	db.session.add(user)
 	db.session.commit()

@@ -68,9 +68,10 @@
                                     <div>
 
                                         <img
-                                                src="{{ url_for('static', filename=user.avatar) }}"
+                                                src="{{ url_for('static', filename='uploads') }}/{{ user.profile }}"
                                                 alt="{{ user.username }}"
                                                 class="rounded-circle object-fit-cover"
+                                                id="profilePreview"
                                                 style="width: 80px; height: 80px;"
                                                 onerror="this.onerror=null;
                                                         this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
@@ -82,7 +83,7 @@
                                     <div>
                                         <input
                                                 class="form-control"
-                                                type="text"
+                                                type="file"
                                                 id="profile"
                                                 name="profile"
                                                 accept="image/*"

@@ -109,7 +109,7 @@
                                 <td>{{ user.id }}</td>
                                 <td>
                                     <img
-                                            src="{{ user.profile }}"
+                                            src="{{ url_for('static', filename='uploads') }}/{{ user.profile }}"
                                             alt="Profile"
                                             class="rounded-circle object-fit-cover"
                                             width="40"

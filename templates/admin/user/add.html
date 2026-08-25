@@ -34,8 +34,9 @@
         <section class="row g-3">
             <div class="col-12">
 
-                <form method="post" 
+                <form method="post"
                       action="{{ url_for('do_add_user') }}"
+                      enctype="multipart/form-data"
                       class="panel needs-validation"
                       novalidate>
 
@@ -69,6 +70,7 @@
                                         src="{{ url_for('static', filename='assets/images/avatar/404_image.png') }}"
                                         alt="Default profile"
                                         class="rounded-circle object-fit-cover"
+                                        id="profilePreview"
                                         style="width: 80px; height: 80px;"
                                     >
                                 </div>
@@ -77,7 +79,7 @@
                                 <div class="flex-grow-1">
                                     <input
                                         class="form-control"
-                                        type="text"
+                                        type="file"
                                         id="profile"
                                         name="profile"
                                         placeholder="Enter profile image path"

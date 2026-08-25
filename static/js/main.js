@@ -238,3 +238,14 @@
     }
   });
 })();
+
+    const profileInput = document.getElementById('profile');
+    const profilePreview = document.getElementById('profilePreview');
+
+    profileInput.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            profilePreview.src = URL.createObjectURL(file);
+        }
+    });

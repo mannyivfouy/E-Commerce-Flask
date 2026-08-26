@@ -1,206 +1,210 @@
-
 {% extends 'admin/master.html' %}
 
 {% block content %}
-    <main class="dashboard-content">
-        <div class="container-fluid px-3 px-lg-4 py-4">
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
 
-            <!-- Page Heading -->
-            <div class="page-heading">
-                <div class="page-heading-copy">
+        <!-- Page Heading -->
+        <div class="page-heading">
+            <div class="page-heading-copy">
                 <span class="page-icon">
                     <i class="bi bi-person-plus" aria-hidden="true"></i>
                 </span>
 
-                    <div>
-                        <p class="eyebrow mb-1">Management</p>
-                        <h1 class="h3 mb-1">Edit User</h1>
-                        <p class="text-muted mb-0">
-                            Update the user's account information and role.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="heading-actions">
-                    <a class="btn btn-outline-secondary btn-sm"
-                       href="{{ url_for('users') }}">
-                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                        Back to Users
-                    </a>
+                <div>
+                    <p class="eyebrow mb-1">Management</p>
+                    <h1 class="h3 mb-1">Edit User</h1>
+                    <p class="text-muted mb-0">
+                        Update the user's account information and role.
+                    </p>
                 </div>
             </div>
 
-            <!-- User Form -->
-            <section class="row g-3">
-                <div class="col-12">
-                    <form method="post"
-                          action="{{ url_for('do_edit_user') }}"
-                          class="panel needs-validation"
-                          enctype="multipart/form-data"
-                          novalidate>
-
-
-                        <!-- Panel Header -->
-                        <div class="panel-header">
-                            <div>
-                                <h2 class="h5 mb-1 section-title">
-                                    <i class="bi bi-person-gear" aria-hidden="true"></i>
-                                    <span>User Information</span>
-                                </h2>
-
-                                <p class="text-muted mb-0">
-                                    Update the user's profile and account details.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="row g-4">
-
-                            <input type="hidden" name="user_id" value="{{ user.id }}"/>
-
-                            <!-- Profile -->
-                            <div class="col-12">
-                                <label class="form-label">Profile</label>
-
-                                <div class="d-flex align-items-center gap-3">
-
-                                    <!-- Profile Image -->
-                                    <div>
-
-                                        <img
-                                                src="{{ url_for('static', filename='uploads') }}/{{ user.profile }}"
-                                                alt="{{ user.username }}"
-                                                class="rounded-circle object-fit-cover"
-                                                id="profilePreview"
-                                                style="width: 80px; height: 80px;"
-                                                onerror="this.onerror=null;
-                                                        this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
-                                        >
-
-                                    </div>
-
-                                    <!-- Upload -->
-                                    <div>
-                                        <input
-                                                class="form-control"
-                                                type="file"
-                                                id="profile"
-                                                name="profile"
-                                                accept="image/*"
-                                        >
-
-                                        <small class="text-muted">
-                                            JPG, PNG or WEBP. Recommended size: 200×200px.
-                                        </small>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <!-- Username -->
-                            <div class="col-md-6">
-                                <label class="form-label" for="username">
-                                    Username
-                                </label>
-
-                                <input
-                                        class="form-control"
-                                        id="username"
-                                        name="username"
-                                        type="text"
-                                        value="{{ user.username }}"
-                                        placeholder="Enter username"
-                                        required
-                                >
-
-                                <div class="invalid-feedback">
-                                    Username is required.
-                                </div>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="col-md-6">
-                                <label class="form-label" for="password">
-                                    Password
-                                </label>
-
-                                <input
-                                        class="form-control"
-                                        id="password"
-                                        name="password"
-                                        type="password"
-                                        placeholder="Leave blank to keep current password"
-                                >
-
-                                <div class="form-text">
-                                    Leave blank if you don't want to change the password.
-                                </div>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="col-md-6">
-                                <label class="form-label" for="email">
-                                    Email
-                                </label>
-
-                                <input
-                                        class="form-control"
-                                        id="email"
-                                        name="email"
-                                        type="email"
-                                        value="{{ user.email }}"
-                                        placeholder="example@email.com"
-                                        required
-                                >
-
-                                <div class="invalid-feedback">
-                                    Enter a valid email.
-                                </div>
-                            </div>
-
-                            <!-- Role -->
-                            <div class="col-md-6">
-                                <label class="form-label" for="role">
-                                    Role
-                                </label>
-
-                                <select
-                                        class="form-select"
-                                        id="role"
-                                        name="role"
-                                        required
-                                >
-                                    <option value="">Choose role</option>
-                                    <option value="admin" {{ 'selected' if user.role == 'admin'}}>Admin</option>
-                                    <option value="user" {{ 'selected' if user.role == 'user'}}>User</option>
-                                </select>
-
-                                <div class="invalid-feedback">
-                                    Choose a role.
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- Actions -->
-                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
-
-                            <a class="btn btn-outline-secondary"
-                               href="{{ url_for('users') }}">
-                                Cancel
-                            </a>
-
-                            <button class="btn btn-primary" type="submit">
-                                <i class="bi bi-person-check" aria-hidden="true"></i>
-                                Update User
-                            </button>
-
-                        </div>
-
-                    </form>
-                </div>
-            </section>
-
+            <div class="heading-actions">
+                <a class="btn btn-outline-secondary btn-sm"
+                   href="{{ url_for('users') }}">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Back to Users
+                </a>
+            </div>
         </div>
-    </main>
+
+        <!-- User Form -->
+        <section class="row g-3">
+            <div class="col-12">
+                <form method="post"
+                      action="{{ url_for('do_edit_user') }}"
+                      class="panel needs-validation"
+                      enctype="multipart/form-data"
+                      novalidate>
+
+
+                    <!-- Panel Header -->
+                    <div class="panel-header">
+                        <div>
+                            <h2 class="h5 mb-1 section-title">
+                                <i class="bi bi-person-gear" aria-hidden="true"></i>
+                                <span>User Information</span>
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                Update the user's profile and account details.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+
+                        <input type="hidden" name="user_id" value="{{ user.id }}"/>
+
+                        <!-- Profile -->
+                        <div class="col-12">
+                            <label class="form-label">Profile</label>
+
+                            <div class="d-flex align-items-center gap-3">
+
+                                <!-- Profile Image -->
+                                <div>
+
+                                    <img
+                                            src="{{ url_for(
+                                            'static',
+                                            filename='uploads/users/' + user.profile.replace('_org_user.', '_thum_user.')
+                                            ) }}"
+                                            alt="{{ user.username }}"
+                                            class="rounded-circle object-fit-cover"
+                                            id="profilePreview"
+                                            style="width: 80px; height: 80px;"
+                                            onerror="this.onerror=null;
+                                                        this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+                                    >
+
+                                </div>
+
+                                <!-- Upload -->
+                                <div>
+                                    <input
+                                            class="form-control"
+                                            type="file"
+                                            id="profile"
+                                            name="profile"
+                                            accept="image/*"
+                                    >
+
+                                    <small class="text-muted">
+                                        JPG, PNG or WEBP. Recommended size: 200×200px.
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Username -->
+                        <div class="col-md-6">
+                            <label class="form-label" for="username">
+                                Username
+                            </label>
+
+                            <input
+                                    class="form-control"
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    value="{{ user.username }}"
+                                    placeholder="Enter username"
+                                    required
+                            >
+
+                            <div class="invalid-feedback">
+                                Username is required.
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="col-md-6">
+                            <label class="form-label" for="password">
+                                Password
+                            </label>
+
+                            <input
+                                    class="form-control"
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    placeholder="Leave blank to keep current password"
+                            >
+
+                            <div class="form-text">
+                                Leave blank if you don't want to change the password.
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label" for="email">
+                                Email
+                            </label>
+
+                            <input
+                                    class="form-control"
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    value="{{ user.email }}"
+                                    placeholder="example@email.com"
+                                    required
+                            >
+
+                            <div class="invalid-feedback">
+                                Enter a valid email.
+                            </div>
+                        </div>
+
+                        <!-- Role -->
+                        <div class="col-md-6">
+                            <label class="form-label" for="role">
+                                Role
+                            </label>
+
+                            <select
+                                    class="form-select"
+                                    id="role"
+                                    name="role"
+                                    required
+                            >
+                                <option value="">Choose role</option>
+                                <option value="admin" {{
+                                'selected' if user.role == 'admin'}}>Admin</option>
+                                <option value="user" {{
+                                'selected' if user.role == 'user'}}>User</option>
+                            </select>
+
+                            <div class="invalid-feedback">
+                                Choose a role.
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+
+                        <a class="btn btn-outline-secondary"
+                           href="{{ url_for('users') }}">
+                            Cancel
+                        </a>
+
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-person-check" aria-hidden="true"></i>
+                            Update User
+                        </button>
+
+                    </div>
+
+                </form>
+            </div>
+        </section>
+
+    </div>
+</main>
 {% endblock %}

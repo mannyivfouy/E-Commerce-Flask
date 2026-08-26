@@ -1,158 +1,160 @@
 {% extends 'admin/master.html' %}
 
 {% block content %}
-    <main class="dashboard-content">
-        <div class="container-fluid px-3 px-lg-4 py-4">
-            <div class="page-heading">
-                <div class="page-heading-copy">
-                    <span class="page-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
-                    <div>
-                        <p class="eyebrow mb-1">Management</p>
-                        <h1 class="h3 mb-1">Users</h1>
-                        <p class="text-muted mb-0">Review accounts, roles, account status, and team ownership.</p>
-                    </div>
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
+        <div class="page-heading">
+            <div class="page-heading-copy">
+                <span class="page-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+                <div>
+                    <p class="eyebrow mb-1">Management</p>
+                    <h1 class="h3 mb-1">Users</h1>
+                    <p class="text-muted mb-0">Review accounts, roles, account status, and team ownership.</p>
                 </div>
-                <div class="heading-actions"><a class="btn btn-outline-secondary btn-sm" href="tables.html"><i
-                        class="bi bi-download" aria-hidden="true"></i> Export</a><a class="btn btn-primary btn-sm"
-                                                                                    href="{{ url_for('add_user') }}"><i
-                        class="bi bi-person-plus" aria-hidden="true"></i> Add User</a></div>
+            </div>
+            <div class="heading-actions"><a class="btn btn-outline-secondary btn-sm" href="tables.html"><i
+                    class="bi bi-download" aria-hidden="true"></i> Export</a><a class="btn btn-primary btn-sm"
+                                                                                href="{{ url_for('add_user') }}"><i
+                    class="bi bi-person-plus" aria-hidden="true"></i> Add User</a></div>
+        </div>
+
+        <section class="row g-3 mt-1" aria-label="User summary">
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-primary">
+                    <div class="metric-top">
+                        <span class="metric-label">Total Users</span>
+                        <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="metric-value">8,742</div>
+                    <div class="metric-meta">
+                        <span class="text-success">+5.1%</span>
+                        <span>this month</span>
+                    </div>
+                </article>
             </div>
 
-            <section class="row g-3 mt-1" aria-label="User summary">
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <article class="metric-card metric-primary">
-                        <div class="metric-top">
-                            <span class="metric-label">Total Users</span>
-                            <span class="metric-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
-                        </div>
-                        <div class="metric-value">8,742</div>
-                        <div class="metric-meta">
-                            <span class="text-success">+5.1%</span>
-                            <span>this month</span>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <article class="metric-card metric-success">
-                        <div class="metric-top">
-                            <span class="metric-label">Active</span>
-                            <span class="metric-icon"><i class="bi bi-check2-circle" aria-hidden="true"></i></span>
-                        </div>
-                        <div class="metric-value">7,980</div>
-                        <div class="metric-meta">
-                            <span class="text-success">91%</span>
-                            <span>healthy accounts</span>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <article class="metric-card metric-warning">
-                        <div class="metric-top">
-                            <span class="metric-label">Pending</span>
-                            <span class="metric-icon"><i class="bi bi-hourglass-split" aria-hidden="true"></i></span>
-                        </div>
-                        <div class="metric-value">184</div>
-                        <div class="metric-meta">
-                            <span class="text-warning">12</span>
-                            <span>need approval</span>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-12 col-sm-6 col-xl-3">
-                    <article class="metric-card metric-danger">
-                        <div class="metric-top">
-                            <span class="metric-label">Suspended</span>
-                            <span class="metric-icon"><i class="bi bi-slash-circle" aria-hidden="true"></i></span>
-                        </div>
-                        <div class="metric-value">38</div>
-                        <div class="metric-meta">
-                            <span class="text-danger">4</span>
-                            <span>flagged today</span>
-                        </div>
-                    </article>
-                </div>
-            </section>
-
-            <section class="panel mt-3">
-                <div class="panel-header">
-                    <div>
-                        <h2 class="h5 mb-1 section-title"><i class="bi bi-table"
-                                                             aria-hidden="true"></i><span>User List</span></h2>
-                        <p class="text-muted mb-0">Search, review, and manage team member accounts.</p>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-success">
+                    <div class="metric-top">
+                        <span class="metric-label">Active</span>
+                        <span class="metric-icon"><i class="bi bi-check2-circle" aria-hidden="true"></i></span>
                     </div>
-                    <div class="d-flex flex-wrap gap-2">
-                        <input class="form-control form-control-sm table-search" type="search"
-                               placeholder="Search users" data-table-search="usersTable" aria-label="Search users">
-                        <a class="btn btn-primary btn-sm" href="{{ url_for('add_user') }}"><i class="bi bi-person-plus"
-                                                                                              aria-hidden="true"></i>
-                            Add User</a>
+                    <div class="metric-value">7,980</div>
+                    <div class="metric-meta">
+                        <span class="text-success">91%</span>
+                        <span>healthy accounts</span>
                     </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="table align-middle mb-0" id="usersTable" data-searchable-table>
-                        <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Profile</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
-                            <th scope="col" class="text-end">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for user in users %}
-                            <tr>
-                                <td>{{ user.id }}</td>
-                                <td>
-                                    <img
-                                            src="{{ url_for('static', filename='uploads') }}/{{ user.profile }}"
-                                            alt="Profile"
-                                            class="rounded-circle object-fit-cover"
-                                            width="40"
-                                            height="40"
-                                            onerror="this.onerror=null;
-                                                    this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
-                                    >
+                </article>
+            </div>
 
-                                </td>
-                                <td>{{ user.username }}</td>
-                                <td>{{ user.email }}</td>
-                                <td>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-warning">
+                    <div class="metric-top">
+                        <span class="metric-label">Pending</span>
+                        <span class="metric-icon"><i class="bi bi-hourglass-split" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="metric-value">184</div>
+                    <div class="metric-meta">
+                        <span class="text-warning">12</span>
+                        <span>need approval</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-danger">
+                    <div class="metric-top">
+                        <span class="metric-label">Suspended</span>
+                        <span class="metric-icon"><i class="bi bi-slash-circle" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="metric-value">38</div>
+                    <div class="metric-meta">
+                        <span class="text-danger">4</span>
+                        <span>flagged today</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="panel mt-3">
+            <div class="panel-header">
+                <div>
+                    <h2 class="h5 mb-1 section-title"><i class="bi bi-table"
+                                                         aria-hidden="true"></i><span>User List</span></h2>
+                    <p class="text-muted mb-0">Search, review, and manage team member accounts.</p>
+                </div>
+                <div class="d-flex flex-wrap gap-2">
+                    <input class="form-control form-control-sm table-search" type="search"
+                           placeholder="Search users" data-table-search="usersTable" aria-label="Search users">
+                    <a class="btn btn-primary btn-sm" href="{{ url_for('add_user') }}"><i class="bi bi-person-plus"
+                                                                                          aria-hidden="true"></i>
+                        Add User</a>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-middle mb-0" id="usersTable" data-searchable-table>
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Profile</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                        <th scope="col" class="text-end">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>
+                            <img
+                                    src="{{ url_for(
+                                    'static',
+                                    filename='uploads/users/' + user.profile.replace('_org_user.', '_thum_user.')
+                                    ) }}"
+                                    alt="{{ user.username }}"
+                                    class="rounded-circle object-fit-cover"
+                                    width="40"
+                                    height="40"
+                                    onerror="this.onerror=null;
+             this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+                            >
+                        </td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
                                     <span style="text-transform: uppercase">
                                         {{ user.role }}
                                     </span>
-                                </td>
-                                <td class="text-end gap-3">
-                                    <div class="gap-3">
-                                        <a class="btn btn-warning btn-sm"
-                                           href="{{ url_for('edit_user', user_id=user.id) }}">Edit</a>
+                        </td>
+                        <td class="text-end gap-3">
+                            <div class="gap-3">
+                                <a class="btn btn-warning btn-sm"
+                                   href="{{ url_for('edit_user', user_id=user.id) }}">Edit</a>
 
-                                        <a class="btn btn-danger btn-sm"
-                                           href="{{ url_for('confirm_delete_user', user_id = user.id) }}"> Delete</a>
-                                    </div>
+                                <a class="btn btn-danger btn-sm"
+                                   href="{{ url_for('confirm_delete_user', user_id = user.id) }}"> Delete</a>
+                            </div>
 
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-3">
-                    {#                    <p class="text-muted small mb-0">Showing 1 to 5 of 124 users</p>#}
-                    <nav aria-label="Users pagination">
-                        <ul class="pagination pagination-sm mb-0">
-                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </section>
-        </div>
-    </main>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-3">
+                {# <p class="text-muted small mb-0">Showing 1 to 5 of 124 users</p>#}
+                <nav aria-label="Users pagination">
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+    </div>
+</main>
 {% endblock %}

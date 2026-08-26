@@ -35,9 +35,16 @@
             <div class="dropdown">
                 <button class="profile-button dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
-                    <img class="avatar-img avatar-sm"
-                         src="{{ url_for('static', filename='assets/images/avatar/avatar-3.jpg') }}" alt="Admin Hasan">
-                    <span class="profile-name d-none d-sm-inline">Admin Hasan</span>
+                    <img
+                            class="avatar-img avatar-sm"
+                            src="{{ url_for('static', filename='uploads/' + session.get('profile', '')) }}"
+                            alt="{{ session.get('username', 'User') }}"
+                            onerror="this.onerror=null; this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+                    >
+
+                    <span class="profile-name d-none d-sm-inline">
+                        {{ session.get('username', 'User') }}
+                    </span>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="profile.html">Profile</a></li>

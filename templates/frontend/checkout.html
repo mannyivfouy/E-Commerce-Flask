@@ -47,7 +47,7 @@
 <!-- CHECKOUT FORM -->
 <section class="max-w-7xl mx-auto px-4 py-12">
 
-    <form action="{{ url_for('do_checkout') }}" method="POST">
+    <form action="{{ url_for('front_bp.do_checkout') }}" method="POST">
 
         <div class="grid lg:grid-cols-3 gap-8">
 
@@ -269,14 +269,14 @@
                 </div>
 
                 <!-- SUBMIT BUTTON -->
-                <button type="submit" href="{{ url_for('do_checkout') }}"
+                <button type="submit" href="{{ url_for('front_bp.do_checkout') }}"
                         class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl font-semibold transition"
                 >
                     Confirm Order
                 </button>
 
                 <a
-                        href="{{ url_for('cart') }}"
+                        href="{{ url_for('front_bp.cart') }}"
                         class="block text-center w-full mt-3 border border-gray-300 py-4 rounded-xl font-medium hover:bg-gray-50 transition"
                 >
                     Back To Cart

@@ -50,7 +50,7 @@
                     <h2 class="text-xl font-bold"> {{ cart_list | length }} products in cart</h2>
                 </div>
 
-                <a href="{{ url_for('products') }}" class="text-indigo-600 font-medium hover:underline">
+                <a href="{{ url_for('front_bp.products') }}" class="text-indigo-600 font-medium hover:underline">
                     Continue shopping
                 </a>
             </div>
@@ -146,13 +146,13 @@
                 </div>
             </div>
 
-            <a href="{{ url_for('checkout') }}"
+            <a href="{{ url_for('front_bp.checkout') }}"
                class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-medium block flex items-center justify-center"
             >
                 Checkout
             </a>
 
-            <a href="{{ url_for('products') }}"
+            <a href="{{ url_for('front_bp.products') }}"
                class="w-full mt-3 border border-gray-300 py-3 rounded-xl font-medium block flex items-center justify-center"
             >
                 Continue Shopping

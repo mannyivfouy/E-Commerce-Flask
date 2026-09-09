@@ -6,9 +6,9 @@
 <section class="max-w-7xl mx-auto px-4 py-12">
     <!-- Breadcrumb -->
     <div class="flex items-center gap-2 text-sm text-gray-500 mb-8">
-        <a href="{{ url_for('home') }}" class="hover:text-indigo-600">Home</a>
+        <a href="{{ url_for('front_bp.home') }}" class="hover:text-indigo-600">Home</a>
         <span>/</span>
-        <a href="{{ url_for('products') }}" class="hover:text-indigo-600">Products</a>
+        <a href="{{ url_for('front_bp.products') }}" class="hover:text-indigo-600">Products</a>
         <span>/</span>
         <span class="text-gray-800 font-medium">{{ product.title }}</span>
     </div>
@@ -61,13 +61,13 @@
 
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 mt-10">
-                <a href="{{ url_for('cart', product_id = product.id) }}"
+                <a href="{{ url_for('front_bp.cart', product_id = product.id) }}"
                         class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition flex items-center justify-center"
                 >
                     Add To Cart
                 </a>
 
-                <a href="{{ url_for('checkout') }}"
+                <a href="{{ url_for('front_bp.checkout') }}"
                         class="flex-1 border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-4 rounded-2xl font-medium text-lg transition flex items-center justify-center"
                 >
                     Buy Now
@@ -86,7 +86,7 @@
             <p class="text-gray-500 mt-2">You may also like these products</p>
         </div>
 
-        <a href="{{ url_for('products') }}" class="text-indigo-600 font-medium"> View All </a>
+        <a href="{{ url_for('front_bp.products') }}" class="text-indigo-600 font-medium"> View All </a>
     </div>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -137,7 +137,7 @@
                     <div class="mt-5 space-y-2">
 
                         <!-- Show detail -->
-                        <a href="{{ url_for('product', product_id = product.id) }}"
+                        <a href="{{ url_for('front_bp.product', product_id = product.id) }}"
                            class="w-full block text-center border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-3 rounded-xl font-medium transition">
                             Show Detail
                         </a>

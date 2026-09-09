@@ -2,7 +2,7 @@
   <div class="max-w-full mx-auto px-12">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
-      <a class="flex items-center gap-3 cursor-pointer" href="{{ url_for('home') }}">
+      <a class="flex items-center gap-3 cursor-pointer" href="{{ url_for('front_bp.home') }}">
         <div
           class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold"
         >
@@ -19,7 +19,7 @@
       <ul class="hidden md:flex items-center gap-8">
         <li>
           <a
-            href="{{ url_for('home') }}"
+            href="{{ url_for('front_bp.home') }}"
             class="text-gray-700 hover:text-indigo-600 font-medium transition"
           >
             Home
@@ -28,7 +28,7 @@
 
         <li>
           <a
-            href="{{ url_for('products') }}"
+            href="{{ url_for('front_bp.products') }}"
             class="text-gray-700 hover:text-indigo-600 font-medium transition"
           >
             Products
@@ -37,7 +37,7 @@
 
         <li>
           <a
-            href="{{ url_for('account') }}"
+            href="{{ url_for('front_bp.account') }}"
             class="text-gray-700 hover:text-indigo-600 font-medium transition"
           >
             Account
@@ -46,7 +46,7 @@
 
         <li>
           <a
-            href="{{ url_for('cart') }}"
+            href="{{ url_for('front_bp.cart') }}"
             class="text-gray-700 hover:text-indigo-600 font-medium transition"
           >
             Cart

@@ -105,17 +105,17 @@
                 <!-- Menu -->
                 <div class="mt-8 space-y-2">
 
-                    <a href="{{ url_for('home') }}"
+                    <a href="{{ url_for('front_bp.home') }}"
                        class="flex items-center gap-3 bg-indigo-600 text-white px-4 py-3 rounded-2xl font-medium">
                         Home
                     </a>
 
-                    <a href="{{ url_for('cart') }}"
+                    <a href="{{ url_for('front_bp.cart') }}"
                        class="flex items-center gap-3 hover:bg-gray-100 px-4 py-3 rounded-2xl font-medium transition">
                         Cart
                     </a>
 
-                    <a href="{{ url_for('checkout') }}"
+                    <a href="{{ url_for('front_bp.checkout') }}"
                        class="flex items-center gap-3 hover:bg-gray-100 px-4 py-3 rounded-2xl font-medium transition">
                         Checkout
                     </a>
@@ -205,7 +205,7 @@
                         </h2>
                     </div>
 
-                    <a href="{{ url_for('products') }}"
+                    <a href="{{ url_for('front_bp.products') }}"
                             class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded-2xl font-medium transition">
                         Shop Again
                     </a>

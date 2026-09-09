@@ -22,7 +22,7 @@
 
             <div class="heading-actions">
                 <a class="btn btn-outline-secondary btn-sm"
-                   href="{{ url_for('users') }}">
+                   href="{{ url_for('admin_bp.users') }}">
                     <i class="bi bi-arrow-left" aria-hidden="true"></i>
                     Back to Users
                 </a>
@@ -54,16 +54,16 @@
 
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <img
-                                    src="{{ url_for(
-                                    'static',
-                                    filename='uploads/users/' + user.profile.replace('_org_user.', '_thum_user.')
-                                    ) }}"
-                                    alt="{{ user.username }}"
-                                    class="rounded-circle object-fit-cover"
-                                    style="width: 60px; height: 60px;"
-                                    onerror="this.onerror=null;
-                                                    this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
-                            >
+    src="{{ url_for(
+        'static',
+        filename='uploads/users/' + (user.profile or '').replace('_org_user.', '_thum_user.')
+    ) }}"
+    alt="{{ user.username }}"
+    class="rounded-circle object-fit-cover"
+    style="width: 60px; height: 60px;"
+    onerror="this.onerror=null;
+        this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+>
 
                             <div>
                                 <h5 class="mb-0">
@@ -107,12 +107,12 @@
                                 gap-2 mt-4">
 
                         <a class="btn btn-outline-secondary"
-                           href="{{ url_for('users') }}">
+                           href="{{ url_for('admin_bp.users') }}">
                             Cancel
                         </a>
 
                         <form method="post"
-                              action="{{ url_for('delete_user', user_id=user.id) }}">
+                              action="{{ url_for('admin_bp.delete_user', user_id=user.id) }}">
                             <input type="hidden" name="user_id" value="{{ user.id }}">
                             <button class="btn btn-danger" type="submit">
                                 <i class="bi bi-trash-fill"

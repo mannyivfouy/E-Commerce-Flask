@@ -23,7 +23,7 @@
 
             <div class="heading-actions">
                 <a class="btn btn-outline-secondary btn-sm"
-                   href="{{ url_for('users') }}">
+                   href="{{ url_for('admin_bp.users') }}">
                     <i class="bi bi-arrow-left" aria-hidden="true"></i>
                     Back to Users
                 </a>
@@ -35,7 +35,7 @@
             <div class="col-12">
 
                 <form method="post"
-                      action="{{ url_for('do_add_user') }}"
+                      action="{{ url_for('admin_bp.do_add_user') }}"
                       enctype="multipart/form-data"
                       class="panel needs-validation"
                       novalidate>
@@ -187,7 +187,7 @@
                     <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
 
                         <a class="btn btn-outline-secondary"
-                           href="{{ url_for('users') }}">
+                           href="{{ url_for('admin_bp.users') }}">
                             Cancel
                         </a>
 

@@ -11,7 +11,7 @@ def login_required(view):
     @wraps(view)
     def wrapped(*args, **kwargs):
         if not session.get('is_login'):
-            return redirect(url_for("admin_login", next=request.path))
+            return redirect(url_for("admin_bp.admin_login", next=request.path))
         return view(*args, **kwargs)
 
     return wrapped
@@ -45,6 +45,6 @@ def admin_do_login():
             session['role'] = user[5]
             return redirect(url_for("admin_bp.dashboard"))
     else:
-        return redirect(url_for("admin_login"))
+        return redirect(url_for("admin_bp.admin_login"))
 
     return redirect(url_for("admin_bp.dashboard"))

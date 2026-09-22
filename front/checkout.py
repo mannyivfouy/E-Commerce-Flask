@@ -2,6 +2,8 @@ from front import front_bp
 from flask import request, redirect, render_template, make_response
 from product import  products as pro
 import json
+import os
+import requests
 
 @front_bp.route('/checkout')
 def checkout():
@@ -34,9 +36,8 @@ def do_checkout():
     address = form['address']
 
     # send message
-    import requests
-
-    bot_token = "8652371918:AAHNgxYKUcMicPDq1BDPnJr7tqWkPNKLxBU"
+    bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
+    chat_id = os.getenv('TELEGRAM_CHAT_ID')
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
 
     message = ""
@@ -53,7 +54,7 @@ def do_checkout():
     payload = {
         "text": f"{message}",
         "parse_mode": "HTML",
-        "chat_id": "@bot_flask_sv26shop",
+        "chat_id": chat_id,
         "disable_web_page_preview": False,
         "disable_notification": False,
         "reply_to_message_id": None

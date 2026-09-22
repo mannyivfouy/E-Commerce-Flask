@@ -1,6 +1,7 @@
 from product import products
 import os
 from PIL import Image
+import requests
 
 def get_product_by_id(product_id):
 	for product in products:

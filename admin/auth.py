@@ -5,7 +5,7 @@ from functools import wraps
 
 from extensions import db
 from sqlalchemy import text
-
+from extensions import limiter
 
 def login_required(view):
     @wraps(view)
@@ -18,12 +18,14 @@ def login_required(view):
 
 
 @admin_bp.get('/login')
+@limiter.limit("10 per minute")
 def admin_login():
     module = 'login'
     return render_template('admin/login.html', module=module)
 
 
 @admin_bp.post('/login')
+@limiter.limit("3 per minute")
 def admin_do_login():
     module = 'login'
     form = request.form

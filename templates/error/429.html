@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>429 Too Many Requests</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
+                            '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+                        },
+                        shake: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '20%, 60%': { transform: 'translateX(-4px)' },
+                            '40%, 80%': { transform: 'translateX(4px)' },
+                        }
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+                        'shake': 'shake 0.5s ease-in-out',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090a0f;
+            color: #f3f4f6;
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-glow {
+            text-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-red-600/20 rounded-full blur-3xl animate-pulse-glow pointer-events-none"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-amber-600/15 rounded-full blur-3xl animate-pulse-glow pointer-events-none" style="animation-delay: 2s;"></div>
+
+    <main class="w-full max-w-lg glass-card rounded-3xl p-8 sm:p-10 shadow-2xl relative z-10 text-center transition-all duration-300">
+
+        <div class="mx-auto w-20 h-20 rounded-2xl bg-gradient-to-tr from-red-500/20 to-amber-500/20 border border-red-500/30 flex items-center justify-center mb-6 shadow-inner relative group">
+            <svg class="w-10 h-10 text-red-500 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <div class="absolute inset-0 rounded-2xl bg-red-500/10 animate-ping opacity-25 pointer-events-none"></div>
+        </div>
+
+        <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-500/10 text-red-400 border border-red-500/20 mb-3 tracking-wide uppercase">
+            Error 429
+        </div>
+        <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white mb-3 text-glow">
+            Too Many Requests
+        </h1>
+        <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-8">
+            You have exceeded your rate limit of <span class="text-white font-medium">10 requests per 1 minute</span>. Please slow down and try again shortly.
+        </p>
+
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-6 mb-8 relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs uppercase tracking-wider text-gray-400 font-medium">Auto-retry in</span>
+                <span id="timer-display" class="text-lg font-mono font-bold text-amber-400">01:00</span>
+            </div>
+            <!-- Progress bar -->
+            <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-red-500 to-amber-500 h-2.5 rounded-full transition-all duration-1000 w-full"></div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+            <button id="retry-btn" onclick="handleRetry()" class="flex-1 bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-red-900/20 transition-all duration-200 transform active:scale-95 flex items-center justify-center gap-2 cursor-pointer">
+                <svg id="retry-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                <span id="retry-text">Try Again Now</span>
+            </button>
+            <button onclick="window.location.href='/'" class="px-6 py-3 rounded-xl bg-gray-800/80 hover:bg-gray-800 text-gray-300 hover:text-white border border-gray-700 font-semibold transition-all duration-200 cursor-pointer">
+                Go Home
+            </button>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-gray-800/80 text-xs text-gray-500 flex items-center justify-between">
+            <span>Client IP: 192.168.1.42</span>
+            <span>Ref ID: #429-ERR-9981</span>
+        </div>
+    </main>
+
+    <script>
+        let timeLeft = 60;
+        const totalTime = 60;
+        const timerDisplay = document.getElementById('timer-display');
+        const progressBar = document.getElementById('progress-bar');
+        const retryBtn = document.getElementById('retry-btn');
+        const retryText = document.getElementById('retry-text');
+        const retryIcon = document.getElementById('retry-icon');
+        const card = document.querySelector('main');
+
+        function updateCountdown() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                let percentage = (timeLeft / totalTime) * 100;
+                progressBar.style.width = `${percentage}%`;
+
+                if (timeLeft === 0) {
+                    timerDisplay.textContent = "Ready!";
+                    timerDisplay.classList.remove('text-amber-400');
+                    timerDisplay.classList.add('text-emerald-400');
+                    retryBtn.classList.remove('from-red-600', 'to-amber-600');
+                    retryBtn.classList.add('from-emerald-600', 'to-teal-600', 'shadow-emerald-900/20');
+                    retryText.textContent = "Rate Limit Reset";
+                }
+            }
+        }
+
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        function handleRetry() {
+            retryBtn.disabled = true;
+            retryIcon.classList.add('animate-spin');
+            retryText.textContent = "Connecting...";
+
+            // Simulate server ping after short delay
+            setTimeout(() => {
+                if (timeLeft <= 0) {
+                    window.location.reload();
+                } else {
+                    retryIcon.classList.remove('animate-spin');
+                    retryText.textContent = "Try Again Now";
+                    retryBtn.disabled = false;
+
+                    // Shake effect on card to indicate still rate-limited
+                    card.classList.add('animate-shake');
+                    setTimeout(() => card.classList.remove('animate-shake'), 500);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

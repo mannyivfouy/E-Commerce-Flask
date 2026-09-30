@@ -1,5 +1,3 @@
-import allowed
-
 from admin import admin_bp
 from flask import render_template, request, redirect, url_for
 from admin.auth import login_required
@@ -52,7 +50,7 @@ def do_edit_user():
     user.role = form.get('role')
 
     # Only update profile if a new image was uploaded
-    if file and file.filename and allowed(file.filename):
+    if file and file.filename and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         file.save(os.path.join(UPLOAD_DIR, filename))
         user.profile = filename

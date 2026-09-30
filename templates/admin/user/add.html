@@ -1,208 +1,210 @@
-
 {% extends 'admin/master.html' %}
 
 {% block content %}
-<main class="dashboard-content">
-    <div class="container-fluid px-3 px-lg-4 py-4">
+    <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
 
-        <!-- Page Heading -->
-        <div class="page-heading">
-            <div class="page-heading-copy">
+            <!-- Page Heading -->
+            <div class="page-heading">
+                <div class="page-heading-copy">
                 <span class="page-icon">
                     <i class="bi bi-person-plus" aria-hidden="true"></i>
                 </span>
 
-                <div>
-                    <p class="eyebrow mb-1">Management</p>
-                    <h1 class="h3 mb-1">Add User</h1>
-                    <p class="text-muted mb-0">
-                        Create a new user account with profile and role information.
-                    </p>
+                    <div>
+                        <p class="eyebrow mb-1">Management</p>
+                        <h1 class="h3 mb-1">Add User</h1>
+                        <p class="text-muted mb-0">
+                            Create a new user account with profile and role information.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="heading-actions">
+                    <a class="btn btn-outline-secondary btn-sm"
+                       href="{{ url_for('admin_bp.users') }}">
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        Back to Users
+                    </a>
                 </div>
             </div>
 
-            <div class="heading-actions">
-                <a class="btn btn-outline-secondary btn-sm"
-                   href="{{ url_for('admin_bp.users') }}">
-                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                    Back to Users
-                </a>
-            </div>
-        </div>
+            <!-- User Form -->
+            <section class="row g-3">
+                <div class="col-12">
 
-        <!-- User Form -->
-        <section class="row g-3">
-            <div class="col-12">
+                    <form method="post"
+                          action="{{ url_for('admin_bp.do_add_user') }}"
+                          enctype="multipart/form-data"
+                          class="panel needs-validation"
+                          novalidate>
 
-                <form method="post"
-                      action="{{ url_for('admin_bp.do_add_user') }}"
-                      enctype="multipart/form-data"
-                      class="panel needs-validation"
-                      novalidate>
+                        <!-- CSRF token -->
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-                    <!-- Panel Header -->
-                    <div class="panel-header">
-                        <div>
-                            <h2 class="h5 mb-1 section-title">
-                                <i class="bi bi-person-plus" aria-hidden="true"></i>
-                                <span>User Information</span>
-                            </h2>
+                        <!-- Panel Header -->
+                        <div class="panel-header">
+                            <div>
+                                <h2 class="h5 mb-1 section-title">
+                                    <i class="bi bi-person-plus" aria-hidden="true"></i>
+                                    <span>User Information</span>
+                                </h2>
 
-                            <p class="text-muted mb-0">
-                                Create a new user account with the required information.
-                            </p>
+                                <p class="text-muted mb-0">
+                                    Create a new user account with the required information.
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row g-4">
+                        <div class="row g-4">
 
-                        <!-- Profile -->
-                        <div class="col-12">
-                            <label class="form-label" for="profile">
-                                Profile
-                            </label>
+                            <!-- Profile -->
+                            <div class="col-12">
+                                <label class="form-label" for="profile">
+                                    Profile
+                                </label>
 
-                            <div class="d-flex align-items-center gap-3">
+                                <div class="d-flex align-items-center gap-3">
 
-                                <!-- Default Profile Image -->
-                                <div>
-                                    <img
-                                        src="{{ url_for('static', filename='assets/images/avatar/404_image.png') }}"
-                                        alt="Default profile"
-                                        class="rounded-circle object-fit-cover"
-                                        id="profilePreview"
-                                        style="width: 80px; height: 80px;"
-                                    >
+                                    <!-- Default Profile Image -->
+                                    <div>
+                                        <img
+                                                src="{{ url_for('static', filename='assets/images/avatar/404_image.png') }}"
+                                                alt="Default profile"
+                                                class="rounded-circle object-fit-cover"
+                                                id="profilePreview"
+                                                style="width: 80px; height: 80px;"
+                                        >
+                                    </div>
+
+                                    <!-- Profile String -->
+                                    <div class="flex-grow-1">
+                                        <input
+                                                class="form-control"
+                                                type="file"
+                                                id="profile"
+                                                name="profile"
+                                                placeholder="Enter profile image path"
+                                        >
+
+                                        <small class="text-muted">
+                                            Enter the profile image path.
+                                        </small>
+                                    </div>
+
                                 </div>
+                            </div>
 
-                                <!-- Profile String -->
-                                <div class="flex-grow-1">
-                                    <input
+                            <!-- Username -->
+                            <div class="col-md-6">
+                                <label class="form-label" for="username">
+                                    Username
+                                </label>
+
+                                <input
                                         class="form-control"
-                                        type="file"
-                                        id="profile"
-                                        name="profile"
-                                        placeholder="Enter profile image path"
-                                    >
+                                        id="username"
+                                        name="username"
+                                        type="text"
+                                        placeholder="Enter username"
+                                        required
+                                >
 
-                                    <small class="text-muted">
-                                        Enter the profile image path.
-                                    </small>
+                                <div class="invalid-feedback">
+                                    Username is required.
                                 </div>
-
                             </div>
+
+                            <!-- Password -->
+                            <div class="col-md-6">
+                                <label class="form-label" for="password">
+                                    Password
+                                </label>
+
+                                <input
+                                        class="form-control"
+                                        id="password"
+                                        name="password"
+                                        type="password"
+                                        placeholder="Enter password"
+                                        required
+                                >
+
+                                <div class="invalid-feedback">
+                                    Password is required.
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label class="form-label" for="email">
+                                    Email
+                                </label>
+
+                                <input
+                                        class="form-control"
+                                        id="email"
+                                        name="email"
+                                        type="email"
+                                        placeholder="example@email.com"
+                                        required
+                                >
+
+                                <div class="invalid-feedback">
+                                    Enter a valid email.
+                                </div>
+                            </div>
+
+                            <!-- Role -->
+                            <div class="col-md-6">
+                                <label class="form-label" for="role">
+                                    Role
+                                </label>
+
+                                <select
+                                        class="form-select"
+                                        id="role"
+                                        name="role"
+                                        required
+                                >
+                                    <option value="">Choose role</option>
+
+                                    <option value="admin">
+                                        Admin
+                                    </option>
+
+                                    <option value="user">
+                                        User
+                                    </option>
+                                </select>
+
+                                <div class="invalid-feedback">
+                                    Choose a role.
+                                </div>
+                            </div>
+
                         </div>
 
-                        <!-- Username -->
-                        <div class="col-md-6">
-                            <label class="form-label" for="username">
-                                Username
-                            </label>
+                        <!-- Actions -->
+                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
 
-                            <input
-                                class="form-control"
-                                id="username"
-                                name="username"
-                                type="text"
-                                placeholder="Enter username"
-                                required
-                            >
+                            <a class="btn btn-outline-secondary"
+                               href="{{ url_for('admin_bp.users') }}">
+                                Cancel
+                            </a>
 
-                            <div class="invalid-feedback">
-                                Username is required.
-                            </div>
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-person-check" aria-hidden="true"></i>
+                                Create User
+                            </button>
+
                         </div>
 
-                        <!-- Password -->
-                        <div class="col-md-6">
-                            <label class="form-label" for="password">
-                                Password
-                            </label>
+                    </form>
 
-                            <input
-                                class="form-control"
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="Enter password"
-                                required
-                            >
+                </div>
+            </section>
 
-                            <div class="invalid-feedback">
-                                Password is required.
-                            </div>
-                        </div>
-
-                        <!-- Email -->
-                        <div class="col-md-6">
-                            <label class="form-label" for="email">
-                                Email
-                            </label>
-
-                            <input
-                                class="form-control"
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="example@email.com"
-                                required
-                            >
-
-                            <div class="invalid-feedback">
-                                Enter a valid email.
-                            </div>
-                        </div>
-
-                        <!-- Role -->
-                        <div class="col-md-6">
-                            <label class="form-label" for="role">
-                                Role
-                            </label>
-
-                            <select
-                                class="form-select"
-                                id="role"
-                                name="role"
-                                required
-                            >
-                                <option value="">Choose role</option>
-
-                                <option value="admin">
-                                    Admin
-                                </option>
-
-                                <option value="user">
-                                    User
-                                </option>
-                            </select>
-
-                            <div class="invalid-feedback">
-                                Choose a role.
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
-
-                        <a class="btn btn-outline-secondary"
-                           href="{{ url_for('admin_bp.users') }}">
-                            Cancel
-                        </a>
-
-                        <button class="btn btn-primary" type="submit">
-                            <i class="bi bi-person-check" aria-hidden="true"></i>
-                            Create User
-                        </button>
-
-                    </div>
-
-                </form>
-
-            </div>
-        </section>
-
-    </div>
-</main>
+        </div>
+    </main>
 {% endblock %}

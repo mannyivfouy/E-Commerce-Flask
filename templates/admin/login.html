@@ -11,9 +11,11 @@
     <section class="auth-card">
         <a class="auth-brand" href="index.html"><span class="brand-icon"><i class="bi bi-grid-1x2-fill"
                                                                             aria-hidden="true"></i></span><span><strong>adminHMD</strong><small>Sign in to your admin workspace.</small></span></a>
-        <form class="needs-validation" novalidate
+        <form class="needs-validation"
               action="{{ url_for('admin_bp.admin_do_login') }}" novalidate
               method="POST">
+            <!-- CSRF token -->
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
             <div class="mb-4">
                 <p class="eyebrow mb-1">Secure Access</p>

@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from admin import admin_bp
 from api import api_bp
 from config import Config
-from extensions import db, migrate, limiter
+from extensions import db, migrate, limiter, csrf
 from front import front_bp
 from dotenv import load_dotenv
 import os, requests
@@ -18,6 +18,7 @@ app.config.from_object(Config)
 db.init_app(app)
 migrate.init_app(app, db)
 limiter.init_app(app)
+csrf.init_app(app)
 
 # Load model
 import models

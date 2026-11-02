@@ -1,3 +1,5 @@
+from flask_limiter.util import get_remote_address
+
 from admin import admin_bp
 from flask import render_template, request, redirect, url_for, session
 from werkzeug.security import check_password_hash
@@ -18,14 +20,14 @@ def login_required(view):
 
 
 @admin_bp.get('/login')
-@limiter.limit("10 per minute")
+@limiter.limit("5 per minute", key_func=get_remote_address)
 def admin_login():
     module = 'login'
     return render_template('admin/login.html', module=module)
 
 
 @admin_bp.post('/login')
-@limiter.limit("3 per minute")
+@limiter.limit("3 per minute", key_func=get_remote_address)
 def admin_do_login():
     module = 'login'
     form = request.form

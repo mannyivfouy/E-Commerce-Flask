@@ -1,37 +1,54 @@
 <aside class="admin-sidebar" id="adminSidebar" aria-label="Main navigation">
     <div class="sidebar-header">
         <a class="brand-mark" href="{{ url_for('admin_bp.dashboard') }}" aria-label="adminHMD dashboard">
-            <span class="brand-icon"><i class="bi bi-grid-1x2-fill" aria-hidden="true"></i></span>
+            <span class="brand-icon">
+                <i class="bi bi-grid-1x2-fill" aria-hidden="true"></i>
+            </span>
+
             <span class="brand-copy">
-            <span class="brand-title">adminHMD</span>
-            <span class="brand-subtitle">Admin Template</span>
-          </span>
+                <span class="brand-title">adminHMD</span>
+                <span class="brand-subtitle">Admin Template</span>
+            </span>
         </a>
     </div>
 
     <nav class="sidebar-nav">
-        <a class="nav-link  {{ 'active' if module == 'dashboard' }}" href="{{ url_for('admin_bp.dashboard') }}"
+        <a class="nav-link {{ 'active' if module == 'dashboard' }}"
+           href="{{ url_for('admin_bp.dashboard') }}"
            aria-current="page">
-            <span class="nav-icon"><i class="bi bi-speedometer2" aria-hidden="true"></i></span>
+            <span class="nav-icon">
+                <i class="bi bi-speedometer2" aria-hidden="true"></i>
+            </span>
             <span class="nav-text">Dashboard</span>
         </a>
-        <a class="nav-link {{ 'active' if module == 'users' }}" href="{{ url_for('admin_bp.users') }}">
-            <span class="nav-icon"><i class="bi bi-people" aria-hidden="true"></i></span>
+
+        <a class="nav-link {{ 'active' if module == 'users' }}"
+           href="{{ url_for('admin_bp.users') }}">
+            <span class="nav-icon">
+                <i class="bi bi-people" aria-hidden="true"></i>
+            </span>
             <span class="nav-text">Users</span>
         </a>
 
+        <a class="nav-link {{ 'active' if module == 'rate_limit' }}"
+           href="{{ url_for('admin_bp.rate_limit_logs') }}">
+            <span class="nav-icon">
+                <i class="bi bi-shield-exclamation" aria-hidden="true"></i>
+            </span>
+            <span class="nav-text">Rate Limit</span>
+        </a>
     </nav>
 
     <div class="sidebar-user">
         <img
                 class="avatar-img avatar-sm"
                 src="{{ url_for('static', filename='uploads/users/' + (session.get('profile') or '')) }}"
-                alt="{{ session.get('username') or 'User' }}"
+                alt="{{ session.get('username', 'User') }}"
                 onerror="this.onerror=null; this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
         >
 
-        <strong>{{ session['username'] }}</strong>
+        <strong>{{ session.get('username', 'User') }}</strong>
 
-        <small>{{ session['role']|capitalize }}</small>
+        <small>{{ session.get('role', 'User')|capitalize }}</small>
     </div>
 </aside>

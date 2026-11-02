@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for
 from admin.auth import login_required
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
-from extensions import db
+from extensions import db, limiter
 from sqlalchemy import text
 import os
 from models.user import User
@@ -11,6 +11,7 @@ from helper import allowed_file, save_user_image, UPLOAD_DIR, USER_UPLOAD_DIR, A
 
 @admin_bp.get('/user')
 @login_required
+@limiter.limit("10 per minute")
 def users():
     module = 'users'
     sql = text("select * from user")
@@ -21,6 +22,7 @@ def users():
 
 @admin_bp.get('/user/edit/<int:user_id>')
 @login_required
+@limiter.limit("10 per minute")
 def edit_user(user_id):
     module = 'users'
     sql = text("select * from user where id = :user_id")
@@ -35,6 +37,7 @@ def edit_user(user_id):
 
 @admin_bp.post('/user/edit')
 @login_required
+@limiter.limit("10 per minute")
 def do_edit_user():
     module = 'users'
     form = request.form
@@ -43,19 +46,24 @@ def do_edit_user():
     user = User.query.get(form.get('user_id'))
 
     if not user:
-        return redirect(url_for("users"))
+        return redirect(url_for("admin_bp.users"))
 
     user.username = form.get('username')
     user.email = form.get('email')
     user.role = form.get('role')
 
-    # Only update profile if a new image was uploaded
-    if file and file.filename and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(UPLOAD_DIR, filename))
-        user.profile = filename
+    # CHANGED: Use the same image-saving process as Add User
+    if file and file.filename and allowed_file(file.filename, ALLOWED_EXTENSIONS):
+        images = save_user_image(
+            file,
+            USER_UPLOAD_DIR,
+            user.id,
+            ALLOWED_EXTENSIONS
+        )
 
-    # Only update password if user entered a new one
+        if images:
+            user.profile = images['original']
+
     password = form.get('password')
 
     if password:
@@ -68,6 +76,7 @@ def do_edit_user():
 
 @admin_bp.get('/user/add')
 @login_required
+@limiter.limit("10 per minute")
 def add_user():
     module = 'users'
 
@@ -79,6 +88,7 @@ def add_user():
 
 @admin_bp.post('/user/add')
 @login_required
+@limiter.limit("10 per minute")
 def do_add_user():
     module = 'users'
     form = request.form
@@ -119,6 +129,7 @@ def do_add_user():
 
 @admin_bp.get('/user/confirm-delete/<int:user_id>')
 @login_required
+@limiter.limit("10 per minute")
 def confirm_delete_user(user_id):
     module = 'users'
     sql = text("select * from user where id = :user_id")
@@ -133,13 +144,14 @@ def confirm_delete_user(user_id):
 
 @admin_bp.post('/user/delete')
 @login_required
+@limiter.limit("10 per minute")
 def delete_user():
     module = 'users'
     form = request.form
     user_id = form.get('user_id')
     user = User.query.get(user_id)
     if not user:
-        return redirect(url_for("admin_bp.users"));
+        return redirect(url_for("admin_bp.users"))
     db.session.delete(user)
     db.session.commit()
-    return redirect(url_for("admin_bp.users"));
+    return redirect(url_for("admin_bp.users"))

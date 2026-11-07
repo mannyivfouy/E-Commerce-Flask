@@ -1,6 +1,5 @@
 from front import front_bp
 from flask import request, redirect, render_template, make_response
-from product import  products as pro
 import json
 import os
 import requests
@@ -68,7 +67,7 @@ def do_checkout():
     response = requests.post(url, json=payload, headers=headers)
 
     response = make_response(
-        render_template('frontend/index.html', products=pro)
+        render_template('frontend/index.html',)
     )
 
     response.set_cookie('cart_list', '')

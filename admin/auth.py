@@ -52,3 +52,10 @@ def admin_do_login():
         return redirect(url_for("admin_bp.admin_login"))
 
     return redirect(url_for("admin_bp.dashboard"))
+
+@admin_bp.get('/logout')
+def admin_logout():
+
+    session.clear()
+
+    return redirect(url_for("admin_bp.admin_login"))

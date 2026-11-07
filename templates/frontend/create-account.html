@@ -3,6 +3,7 @@
 {% include 'frontend/shared/header.html' %}
 <body>
 {% include 'frontend/shared/navbar.html' %}
+
 <main class="flex items-center justify-center px-4 py-14">
 
     <div class="grid lg:grid-cols-2 bg-white rounded-3xl shadow-xl overflow-hidden max-w-6xl w-full">
@@ -11,10 +12,9 @@
         <div class="hidden lg:flex bg-indigo-600 text-white p-12 flex-col justify-between">
 
             <div>
-
-          <span class="bg-white/20 px-4 py-2 rounded-full text-sm">
-            New Customer
-          </span>
+                <span class="bg-white/20 px-4 py-2 rounded-full text-sm">
+                    New Customer
+                </span>
 
                 <h1 class="text-5xl font-bold mt-8 leading-tight">
                     Create your account and start shopping.
@@ -23,7 +23,6 @@
                 <p class="text-indigo-100 mt-6 text-lg">
                     Save orders, track deliveries, and enjoy faster QR checkout experience.
                 </p>
-
             </div>
 
             <!-- Benefits -->
@@ -63,12 +62,10 @@
 
         </div>
 
-
         <!-- RIGHT FORM -->
         <div class="p-8 md:p-12">
 
             <div class="mb-8">
-
                 <p class="text-indigo-600 font-medium">
                     New customer
                 </p>
@@ -80,81 +77,114 @@
                 <p class="text-gray-500 mt-3">
                     Fill in your details to register a new account.
                 </p>
-
             </div>
 
-
-            <form class="space-y-5">
-
-                <!-- Name -->
-                <div class="grid md:grid-cols-2 gap-4">
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            First Name
-                        </label>
-
-                        <input type="text"
-                               placeholder="Alex"
-                               class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
-                    </div>
-
-                    <div>
-                        <label class="block font-medium mb-2">
-                            Last Name
-                        </label>
-
-                        <input type="text"
-                               placeholder="Morgan"
-                               class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
-                    </div>
-
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="space-y-3 mb-6">
+                {% for category, message in messages %}
+                <div class="px-4 py-3 rounded-xl text-sm
+                    {% if category == 'success' %}
+                        bg-green-100 text-green-700
+                    {% elif category == 'warning' %}
+                        bg-yellow-100 text-yellow-700
+                    {% else %}
+                        bg-red-100 text-red-700
+                    {% endif %}
+                ">
+                    {{ message }}
                 </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
 
+            <!-- Registration Form -->
+            <form
+                    method="POST"
+                    action="{{ url_for('front_bp.create_account') }}"
+                    class="space-y-5"
+            >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block font-medium mb-2">
+                        Username
+                    </label>
+
+                    <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                            class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600"
+                    >
+                </div>
 
                 <!-- Email -->
                 <div>
-                    <label class="block font-medium mb-2">
+                    <label for="email" class="block font-medium mb-2">
                         Email
                     </label>
 
-                    <input type="email"
-                           placeholder="alex@example.com"
-                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                    <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="alex@example.com"
+                            autocomplete="email"
+                            required
+                            class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600"
+                    >
                 </div>
-
 
                 <!-- Password -->
                 <div>
-                    <label class="block font-medium mb-2">
+                    <label for="password" class="block font-medium mb-2">
                         Password
                     </label>
 
-                    <input type="password"
-                           placeholder="Create password"
-                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                    <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create password"
+                            autocomplete="new-password"
+                            required
+                            class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600"
+                    >
                 </div>
 
-
                 <!-- Confirm Password -->
+                <!-- NEW: Used for backend password confirmation -->
                 <div>
-                    <label class="block font-medium mb-2">
+                    <label for="confirm_password" class="block font-medium mb-2">
                         Confirm Password
                     </label>
 
-                    <input type="password"
-                           placeholder="Confirm password"
-                           class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600">
+                    <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm password"
+                            autocomplete="new-password"
+                            required
+                            class="w-full border border-gray-300 rounded-2xl px-5 py-4 outline-none focus:ring-2 focus:ring-indigo-600"
+                    >
                 </div>
 
-
                 <!-- Submit -->
-                <button class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition">
+                <button
+                        type="submit"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-2xl font-medium text-lg transition"
+                >
                     Create Account
                 </button>
 
             </form>
-
 
             <!-- Divider -->
             <div class="flex items-center gap-4 my-8">
@@ -163,11 +193,14 @@
                 <div class="flex-1 h-px bg-gray-200"></div>
             </div>
 
-
             <!-- Login -->
             <p class="text-center text-gray-500">
                 Already have an account?
-                <a href="{{ url_for('front_bp.login') }}" class="text-indigo-600 font-semibold hover:underline">
+
+                <a
+                        href="{{ url_for('front_bp.login') }}"
+                        class="text-indigo-600 font-semibold hover:underline"
+                >
                     Login
                 </a>
             </p>
@@ -177,6 +210,7 @@
     </div>
 
 </main>
+
 {% include 'frontend/shared/footer.html' %}
 </body>
 </html>

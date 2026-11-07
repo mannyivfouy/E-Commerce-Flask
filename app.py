@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 import os, requests
 from flask import request
 from models.rate_limit_log import RateLimitLog
+from errors import *
 
 load_dotenv()
 app = Flask(__name__)
@@ -32,52 +33,7 @@ app.register_blueprint(admin_bp, url_prefix="/admin")
 
 app.register_blueprint(api_bp, url_prefix="/api")
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('error/404.html'), 404
-@app.errorhandler(500)
-def internal_server_error(e):
-    return render_template('error/500.html'), 500
-@app.errorhandler(429)
-def too_many_requests(e):
-    user_id = session.get('user_id')
-
-    rate_limit_log = RateLimitLog(
-        user_id=user_id,
-        ip_address=request.remote_addr,
-        endpoint=request.path,
-        method=request.method,
-        limit=str(e.description),
-    )
-
-    db.session.add(rate_limit_log)
-    db.session.commit()
-
-    bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
-    chat_id = os.getenv('TELEGRAM_CHAT_ID')
-
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-
-    message = (
-        "<code>⚠️ RATE LIMIT EXCEEDED</code>\n"
-        "<code>- - - - - - - - - - - - -</code>\n"
-        f"<code>IP     : {request.remote_addr}</code>\n"
-        f"<code>Method : {request.method}</code>\n"
-        f"<code>Path   : {request.path}</code>\n"
-        f"<code>Limit  : {e.description}</code>\n"
-        "<code>- - - - - - - - - - - - -</code>\n"
-        "<code>Someone exceeded a rate limit.</code>"
-    )
-
-    payload = {
-        "chat_id": chat_id,
-        "text": message,
-        "parse_mode": "HTML"
-    }
-
-    requests.post(url, json=payload)
-    return render_template('error/429.html'), 429
-
+error_handlers(app)
 
 if __name__ == '__main__':
     app.run()

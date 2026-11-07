@@ -1,0 +1,235 @@
+{% extends 'admin/master.html' %}
+
+{% block content %}
+<main class="dashboard-content">
+    <div class="container-fluid px-3 px-lg-4 py-4">
+
+        <!-- Page Heading -->
+        <div class="page-heading">
+            <div class="page-heading-copy">
+                    <span class="page-icon">
+                        <i class="bi bi-box-seam" aria-hidden="true"></i>
+                    </span>
+                <div>
+                    <p class="eyebrow mb-1">Management</p>
+                    <h1 class="h3 mb-1">Products</h1>
+                    <p class="text-muted mb-0">Manage your store products, prices, and categories.</p>
+                </div>
+            </div>
+
+            <div class="heading-actions">
+                <a class="btn btn-primary btn-sm"
+                   href="{{ url_for('admin_bp.add_product') }}">
+                    <i class="bi bi-plus-lg" aria-hidden="true"></i> Add Product
+                </a>
+            </div>
+        </div>
+
+        <!-- Product Summary -->
+        <section class="row g-3 mt-1" aria-label="Product summary">
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-primary">
+                    <div class="metric-top">
+                        <span class="metric-label">Total Products</span>
+                        <span class="metric-icon">
+                                <i class="bi bi-box-seam" aria-hidden="true"></i>
+                            </span>
+                    </div>
+                    <div class="metric-value">{{ total_products }}</div>
+                    <div class="metric-meta">
+                        <span>All products</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-success">
+                    <div class="metric-top">
+                        <span class="metric-label">Total Categories</span>
+                        <span class="metric-icon">
+                                <i class="bi bi-tags" aria-hidden="true"></i>
+                            </span>
+                    </div>
+                    <div class="metric-value">{{ total_categories }}</div>
+                    <div class="metric-meta">
+                        <span>Available categories</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-warning">
+                    <div class="metric-top">
+                        <span class="metric-label">Average Price</span>
+                        <span class="metric-icon">
+                                <i class="bi bi-currency-dollar" aria-hidden="true"></i>
+                            </span>
+                    </div>
+                    <div class="metric-value">${{ "%.2f"|format(average_price) }}</div>
+                    <div class="metric-meta">
+                        <span>Across all products</span>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+                <article class="metric-card metric-danger">
+                    <div class="metric-top">
+                        <span class="metric-label">Products Assigned</span>
+                        <span class="metric-icon">
+                                <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            </span>
+                    </div>
+                    <div class="metric-value">{{ categorized_products }}</div>
+                    <div class="metric-meta">
+                        <span>Linked to categories</span>
+                    </div>
+                </article>
+            </div>
+
+        </section>
+
+        <!-- Product Table -->
+        <section class="panel mt-3">
+            <div class="panel-header">
+                <div>
+                    <h2 class="h5 mb-1 section-title">
+                        <i class="bi bi-table" aria-hidden="true"></i>
+                        <span>Product List</span>
+                    </h2>
+                    <p class="text-muted mb-0">
+                        Search, review, and manage your store products.
+                    </p>
+                </div>
+
+                <div class="d-flex flex-wrap gap-2">
+                    <input
+                            class="form-control form-control-sm table-search"
+                            type="search"
+                            placeholder="Search products"
+                            data-table-search="productsTable"
+                            aria-label="Search products">
+
+                    <a class="btn btn-primary btn-sm"
+                       href="{{ url_for('admin_bp.add_product') }}">
+                        <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                        Add Product
+                    </a>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table align-middle mb-0"
+                       id="productsTable"
+                       data-searchable-table>
+
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <!-- NEW: Product Image column -->
+                        <th scope="col">Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col" class="text-end">Action</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+
+                        <!-- NEW: Product Image -->
+                        <td>
+                            {% if product.image %}
+                            <img
+                                    src="{{ url_for('static', filename='uploads/products/' ~ product.image) }}"
+                                    alt="{{ product.name }}"
+                                    class="rounded border"
+                                    width="55"
+                                    height="55"
+                                    style="object-fit: cover;"
+                            >
+                            {% else %}
+                            <div class="rounded border d-flex align-items-center justify-content-center text-muted"
+                                 style="width: 55px; height: 55px;">
+                                <i class="bi bi-image fs-4" aria-hidden="true"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                                    <span class="fw-semibold">
+                                        {{ product.name }}
+                                    </span>
+                        </td>
+
+                        <td>
+                            {{ product.description or 'No description' }}
+                        </td>
+
+                        <td>
+                                    <span class="badge bg-primary">
+                                        {{ product.category_name }}
+                                    </span>
+                        </td>
+
+                        <td class="fw-semibold">
+                            ${{ "%.2f"|format(product.price) }}
+                        </td>
+
+                        <td>
+                            {% if product.qty <= 0 %}
+                            <span class="badge bg-danger">Out of Stock</span>
+                            {% elif product.qty <= 5 %}
+                            <span class="badge bg-warning text-dark">
+                                Low Stock ({{ product.qty }})
+                            </span>
+                            {% else %}
+                            <span class="badge bg-success">
+                                {{ product.qty }} units
+                            </span>
+                            {% endif %}
+                        </td>
+
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a class="btn btn-warning btn-sm"
+                                   href="{{ url_for('admin_bp.edit_product', product_id=product.id) }}">
+                                    Edit
+                                </a>
+
+                                <a class="btn btn-danger btn-sm"
+                                   href="{{ url_for('admin_bp.confirm_delete_product', product_id=product.id) }}">
+                                    Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+                            No products found. Add your first product.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 mt-3">
+                <p class="text-muted small mb-0">
+                    Showing {{ products|length }} products
+                </p>
+            </div>
+
+        </section>
+    </div>
+</main>
+{% endblock %}

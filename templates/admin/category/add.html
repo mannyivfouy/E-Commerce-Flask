@@ -1,0 +1,126 @@
+
+{% extends 'admin/master.html' %}
+
+{% block content %}
+    <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+                <div class="page-heading-copy">
+                    <span class="page-icon">
+                        <i class="bi bi-tags" aria-hidden="true"></i>
+                    </span>
+
+                    <div>
+                        <p class="eyebrow mb-1">Management</p>
+                        <h1 class="h3 mb-1">Add Category</h1>
+                        <p class="text-muted mb-0">
+                            Create a new product category for your store.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="heading-actions">
+                    <a class="btn btn-outline-secondary btn-sm"
+                       href="{{ url_for('admin_bp.categories') }}">
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        Back to Categories
+                    </a>
+                </div>
+            </div>
+
+            <!-- Category Form -->
+            <section class="row g-3">
+                <div class="col-12">
+
+                    <form method="post"
+                          action="{{ url_for('admin_bp.do_add_category') }}"
+                          class="panel needs-validation"
+                          novalidate>
+
+                        <!-- CSRF token -->
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                        <!-- Panel Header -->
+                        <div class="panel-header">
+                            <div>
+                                <h2 class="h5 mb-1 section-title">
+                                    <i class="bi bi-tags" aria-hidden="true"></i>
+                                    <span>Category Information</span>
+                                </h2>
+
+                                <p class="text-muted mb-0">
+                                    Enter the required information to create a new category.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+
+                            <!-- Category Name -->
+                            <div class="col-12">
+                                <label class="form-label" for="name">
+                                    Category Name
+                                </label>
+
+                                <input
+                                    class="form-control"
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Enter category name"
+                                    maxlength="80"
+                                    required
+                                >
+
+                                <div class="invalid-feedback">
+                                    Category name is required.
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label class="form-label" for="description">
+                                    Description
+                                </label>
+
+                                <textarea
+                                    class="form-control"
+                                    id="description"
+                                    name="description"
+                                    rows="4"
+                                    maxlength="255"
+                                    placeholder="Enter category description"
+                                ></textarea>
+
+                                <small class="text-muted">
+                                    Provide a short description of this category (optional).
+                                </small>
+                            </div>
+
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
+
+                            <a class="btn btn-outline-secondary"
+                               href="{{ url_for('admin_bp.categories') }}">
+                                Cancel
+                            </a>
+
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-plus-circle" aria-hidden="true"></i>
+                                Create Category
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

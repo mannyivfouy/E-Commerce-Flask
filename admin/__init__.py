@@ -6,3 +6,6 @@ from . import auth
 from . import dashboard
 from . import user
 from . import rate_limit
+from . import category
+from . import product
+from . import order

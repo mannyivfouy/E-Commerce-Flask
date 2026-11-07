@@ -1,0 +1,158 @@
+
+{% extends 'admin/master.html' %}
+
+{% block content %}
+    <main class="dashboard-content">
+        <div class="container-fluid px-3 px-lg-4 py-4">
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+                <div class="page-heading-copy">
+                    <span class="page-icon">
+                        <i class="bi bi-tag" aria-hidden="true"></i>
+                    </span>
+
+                    <div>
+                        <p class="eyebrow mb-1">Management</p>
+                        <h1 class="h3 mb-1">Delete Category</h1>
+                        <p class="text-muted mb-0">
+                            Review the category information before deleting it.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="heading-actions">
+                    <a class="btn btn-outline-secondary btn-sm"
+                       href="{{ url_for('admin_bp.categories') }}">
+                        <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        Back to Categories
+                    </a>
+                </div>
+            </div>
+
+            <!-- Confirmation -->
+            <section class="row g-3">
+                <div class="col-12 col-md-8 col-lg-6 mx-auto">
+
+                    <div class="panel">
+
+                        <!-- Warning -->
+                        <div class="text-center mb-4">
+                            <div class="text-danger mb-3">
+                                <i class="bi bi-exclamation-triangle-fill"
+                                   style="font-size: 3rem;"></i>
+                            </div>
+
+                            <h4 class="mb-2">Delete this category?</h4>
+
+                            <p class="text-muted mb-0">
+                                This action cannot be undone.
+                            </p>
+                        </div>
+
+                        <!-- Category Information -->
+                        <div class="border rounded p-3 bg-light">
+
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="rounded-circle bg-white border d-flex
+                                            align-items-center justify-content-center"
+                                     style="width: 60px; height: 60px;">
+                                    <i class="bi bi-tag-fill text-secondary"
+                                       style="font-size: 1.5rem;"></i>
+                                </div>
+
+                                <div>
+                                    <h5 class="mb-0">
+                                        {{ category.name }}
+                                    </h5>
+
+                                    <small class="text-muted">
+                                        Category #{{ category.id }}
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-12">
+                                    <small class="text-muted d-block">
+                                        Description
+                                    </small>
+                                    <span>
+                                        {{ category.description or 'No description provided.' }}
+                                    </span>
+                                </div>
+
+                                <div class="col-6">
+                                    <small class="text-muted d-block">
+                                        Category ID
+                                    </small>
+                                    <span>{{ category.id }}</span>
+                                </div>
+
+                                <div class="col-6">
+                                    <small class="text-muted d-block">
+                                        Total Products
+                                    </small>
+                                    <span>{{ category.products|length }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Product Warning -->
+                        {% if category.products %}
+                            <div class="alert alert-warning mt-3 mb-0">
+                                <i class="bi bi-info-circle-fill me-1"
+                                   aria-hidden="true"></i>
+                                This category contains
+                                <strong>{{ category.products|length }}</strong>
+                                product(s). Remove or reassign those products
+                                before deleting this category.
+                            </div>
+                        {% endif %}
+
+                        <!-- Actions -->
+                        <div class="d-flex flex-wrap justify-content-end
+                                    gap-2 mt-4">
+
+                            <a class="btn btn-outline-secondary"
+                               href="{{ url_for('admin_bp.categories') }}">
+                                Cancel
+                            </a>
+
+                            {% if not category.products %}
+                                <form method="post"
+                                      action="{{ url_for('admin_bp.delete_category') }}">
+
+                                    <!-- CSRF token -->
+                                    <input type="hidden"
+                                           name="csrf_token"
+                                           value="{{ csrf_token() }}">
+
+                                    <input type="hidden"
+                                           name="category_id"
+                                           value="{{ category.id }}">
+
+                                    <button class="btn btn-danger" type="submit">
+                                        <i class="bi bi-trash-fill"
+                                           aria-hidden="true"></i>
+                                        Delete Category
+                                    </button>
+                                </form>
+                            {% else %}
+                                <button class="btn btn-danger" type="button" disabled>
+                                    <i class="bi bi-trash-fill"
+                                       aria-hidden="true"></i>
+                                    Delete Category
+                                </button>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+{% endblock %}

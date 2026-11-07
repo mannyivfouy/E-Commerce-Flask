@@ -1,3 +1,4 @@
+```html
 <aside class="admin-sidebar" id="adminSidebar" aria-label="Main navigation">
     <div class="sidebar-header">
         <a class="brand-mark" href="{{ url_for('admin_bp.dashboard') }}" aria-label="adminHMD dashboard">
@@ -14,8 +15,7 @@
 
     <nav class="sidebar-nav">
         <a class="nav-link {{ 'active' if module == 'dashboard' }}"
-           href="{{ url_for('admin_bp.dashboard') }}"
-           aria-current="page">
+           href="{{ url_for('admin_bp.dashboard') }}">
             <span class="nav-icon">
                 <i class="bi bi-speedometer2" aria-hidden="true"></i>
             </span>
@@ -30,6 +30,33 @@
             <span class="nav-text">Users</span>
         </a>
 
+        <!-- Category -->
+        <a class="nav-link {{ 'active' if module == 'category' }}"
+           href="{{ url_for('admin_bp.categories') }}">
+            <span class="nav-icon">
+                <i class="bi bi-tags" aria-hidden="true"></i>
+            </span>
+            <span class="nav-text">Category</span>
+        </a>
+
+        <!-- Product -->
+        <a class="nav-link {{ 'active' if module == 'product' }}"
+           href="{{ url_for('admin_bp.products') }}">
+            <span class="nav-icon">
+                <i class="bi bi-box-seam" aria-hidden="true"></i>
+            </span>
+            <span class="nav-text">Product</span>
+        </a>
+
+        <!-- Order -->
+        <a class="nav-link {{ 'active' if module == 'order' }}"
+           href="{{ url_for('admin_bp.orders') }}">
+            <span class="nav-icon">
+                <i class="bi bi-bag-check" aria-hidden="true"></i>
+            </span>
+            <span class="nav-text">Order</span>
+        </a>
+
         <a class="nav-link {{ 'active' if module == 'rate_limit' }}"
            href="{{ url_for('admin_bp.rate_limit_logs') }}">
             <span class="nav-icon">
@@ -41,10 +68,10 @@
 
     <div class="sidebar-user">
         <img
-                class="avatar-img avatar-sm"
-                src="{{ url_for('static', filename='uploads/users/' + (session.get('profile') or '')) }}"
-                alt="{{ session.get('username', 'User') }}"
-                onerror="this.onerror=null; this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
+            class="avatar-img avatar-sm"
+            src="{{ url_for('static', filename='uploads/users/' + (session.get('profile') or '')) }}"
+            alt="{{ session.get('username', 'User') }}"
+            onerror="this.onerror=null; this.src='{{ url_for('static', filename='assets/images/avatar/404_image.png') }}';"
         >
 
         <strong>{{ session.get('username', 'User') }}</strong>
@@ -52,3 +79,4 @@
         <small>{{ session.get('role', 'User')|capitalize }}</small>
     </div>
 </aside>
+```

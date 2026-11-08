@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+{% include 'frontend/shared/header.html' %}
+
+<body class="bg-gray-50 min-h-screen flex items-center justify-center px-4">
+
+<main class="w-full max-w-md">
+
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+
+        <!-- Heading -->
+        <h1 class="text-2xl font-bold text-gray-900">
+            Complete Your Payment
+        </h1>
+
+        <p class="text-sm text-gray-500 mt-2">
+            Scan the QR code using your Bakong app.
+        </p>
+
+        <!-- QR Code -->
+        <div class="my-7">
+            <div class="inline-block p-3 border border-gray-100 rounded-xl">
+                <img
+                        src="{{ qr_image }}"
+                        alt="Bakong KHQR"
+                        class="w-64 h-64 mx-auto object-contain"
+                >
+            </div>
+        </div>
+
+        <!-- Amount -->
+        <p class="text-sm text-gray-500">
+            Total Amount
+        </p>
+
+        <h2 class="text-3xl font-bold text-indigo-600 mt-1">
+            ${{ "%.2f"|format(amount) }}
+        </h2>
+
+        <!-- Footer -->
+        <p class="text-xs text-gray-400 mt-6">
+            SETEC Market · Powered by Bakong KHQR
+        </p>
+
+    </div>
+
+</main>
+
+<script>
+    const statusElement = document.getElementById('payment-status');
+
+    let checkingPayment = true;
+
+    async function checkPaymentStatus() {
+        if (!checkingPayment) return;
+
+        try {
+            const response = await fetch(
+                "{{ url_for('front_bp.check_payment') }}"
+            );
+
+            const data = await response.json();
+
+            if (data.status === 'PAID' && data.stock_updated !== false) {
+                checkingPayment = false;
+
+                statusElement.className =
+                    'mt-6 rounded-lg bg-green-50 p-4 text-sm text-green-700';
+
+                statusElement.textContent =
+                    'Payment successful! Redirecting...';
+
+                setTimeout(() => {
+                    window.location.href =
+                        "{{ url_for('front_bp.payment_success') }}";
+                }, 2000);
+
+                return;
+            }
+
+            if (data.status === 'PAID' && data.stock_updated === false) {
+                checkingPayment = false;
+
+                statusElement.className =
+                    'mt-6 rounded-lg bg-red-50 p-4 text-sm text-red-700';
+
+                statusElement.textContent =
+                    data.message || 'Payment received, but stock could not be updated.';
+
+                return;
+            }
+
+            if (data.status === 'ERROR') {
+                statusElement.textContent =
+                    data.message || 'Unable to check payment. Retrying...';
+                return;
+            }
+
+            statusElement.textContent =
+                'Waiting for payment confirmation...';
+
+        } catch (error) {
+            console.error('Payment check error:', error);
+            statusElement.textContent =
+                'Connection problem. Retrying payment check...';
+        }
+    }
+
+    checkPaymentStatus();
+
+    const paymentInterval = setInterval(() => {
+        if (!checkingPayment) {
+            clearInterval(paymentInterval);
+            return;
+        }
+
+        checkPaymentStatus();
+    }, 5000);
+</script>
+</body>
+</html>

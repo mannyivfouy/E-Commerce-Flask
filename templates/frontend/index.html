@@ -53,72 +53,61 @@
 </section>
 
 <!-- Featured Products -->
-<!--<section class="max-w-7xl mx-auto px-4 py-12">-->
-<!--    <div class="flex items-center justify-between mb-8">-->
-<!--        <h2 class="text-3xl font-bold">Featured Products</h2>-->
+<section class="max-w-7xl mx-auto px-4 pb-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Product -->
+        {% for product in products %}
+        <div class="bg-white rounded-2xl overflow-hidden shadow-sm transform transition duration-300 hover:scale-105 hover:shadow border p-2">
 
-<!--        <a href="{{ url_for('front_bp.products') }}" class="text-indigo-600 font-medium"> View All </a>-->
-<!--    </div>-->
+            <!-- Image -->
+            <img
+                    src="{{ url_for('static', filename='uploads/products/' ~ product.image) }}"
+                    alt="{{ product.name }}"
+                    class="rounded border"
+                    style="object-fit: cover;"
+            >
 
-<!--    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">-->
-<!--        &lt;!&ndash; Product Card &ndash;&gt;-->
-<!--        {% for product in products %}-->
-<!--            <div class="bg-white rounded-2xl overflow-hidden shadow-sm transform transition duration-300 hover:scale-105 hover:shadow border p-2">-->
+            <!-- Content -->
+            <div class="p-5">
 
-<!--                &lt;!&ndash; Image &ndash;&gt;-->
-<!--                <div class="relative">-->
-<!--                    <img-->
-<!--                            src="{{ product.image }}"-->
-<!--                            alt="{{ product.title }}"-->
-<!--                            class="w-full h-56 object-contain"-->
-<!--                    />-->
+                <!-- Category -->
+                <p class="text-xs text-gray-500 uppercase tracking-wide">
+                    {{ product.category.name}}
+                </p>
 
-<!--                    &lt;!&ndash; Badge &ndash;&gt;-->
-<!--                    <span class="absolute top-3 left-3 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wide">-->
-<!--                        {{ product.badge }}-->
-<!--                    </span>-->
-<!--                </div>-->
+                <!-- Title -->
+                <h3 class="text-lg font-bold mt-1 line-clamp-1">
+                    {{ product.name }}
+                </h3>
 
-<!--                &lt;!&ndash; Content &ndash;&gt;-->
-<!--                <div class="p-5">-->
+                <!-- Description -->
+                <p class="text-gray-500 text-sm mt-2 line-clamp-2">
+                    {{ product.description }}
+                </p>
 
-<!--                    &lt;!&ndash; Category &ndash;&gt;-->
-<!--                    <p class="text-xs text-gray-500 uppercase tracking-wide">-->
-<!--                        {{ product.category }}-->
-<!--                    </p>-->
+                <!-- Price -->
+                <div class="flex items-center justify-between mt-4">
+                        <span class="text-xl font-bold text-indigo-600">
+                            {{ product.price }}$
+                        </span>
+                </div>
 
-<!--                    &lt;!&ndash; Title &ndash;&gt;-->
-<!--                    <h3 class="text-lg font-bold mt-1 line-clamp-1">-->
-<!--                        {{ product.title }}-->
-<!--                    </h3>-->
+                <!-- Buttons -->
+                <div class="mt-5 space-y-2">
+                    <a href="{{ url_for('front_bp.product', product_id = product.id) }}"
+                       class="w-full block text-center border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-3 rounded-xl font-medium transition">
+                        Show Detail
+                    </a>
 
-<!--                    &lt;!&ndash; Description &ndash;&gt;-->
-<!--                    <p class="text-gray-500 text-sm mt-2 line-clamp-2">-->
-<!--                        {{ product.description }}-->
-<!--                    </p>-->
+                </div>
 
-<!--                    &lt;!&ndash; Price &ndash;&gt;-->
-<!--                    <div class="flex items-center justify-between mt-4">-->
-<!--                        <span class="text-xl font-bold text-indigo-600">-->
-<!--                            {{ product.price }}$-->
-<!--                        </span>-->
-<!--                    </div>-->
+            </div>
 
-<!--                    &lt;!&ndash; Buttons &ndash;&gt;-->
-<!--                    <div class="mt-5 space-y-2">-->
-<!--                        <a href="{{ url_for('front_bp.product', product_id = product.id) }}"-->
-<!--                           class="w-full block text-center border border-gray-300 hover:border-indigo-600 hover:text-indigo-600 py-3 rounded-xl font-medium transition">-->
-<!--                            Show Detail-->
-<!--                        </a>-->
+        </div>
+        {% endfor %}
 
-<!--                    </div>-->
-
-<!--                </div>-->
-
-<!--            </div>-->
-<!--        {% endfor %}-->
-<!--    </div>-->
-<!--</section>-->
+    </div>
+</section>
 
 {% include 'frontend/shared/footer.html' %}
 </body>

@@ -1,6 +1,6 @@
 import json
 from front import front_bp
-from flask import render_template, request, make_response
+from flask import render_template, request, make_response, session, flash, redirect, url_for
 from extensions import db
 from models.product import Product
 
@@ -9,6 +9,14 @@ from models.product import Product
 def cart():
     product_id = request.args.get('product_id')
     action = request.args.get('action')
+
+    if product_id and action not in ['remove', 'increase', 'decrease']:
+        if not session.get('user_id'):
+            flash('Please login to add products to your cart.', 'warning')
+            return redirect(url_for(
+                'front_bp.login',
+                next=url_for('front_bp.products')
+            ))
 
     # Get cart from cookie
     cart_cookie = request.cookies.get('cart_list')

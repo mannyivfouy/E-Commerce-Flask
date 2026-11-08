@@ -49,6 +49,8 @@
 
     <form action="{{ url_for('front_bp.do_checkout') }}" method="POST">
 
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <div class="grid lg:grid-cols-3 gap-8">
 
             <!-- LEFT -->
@@ -120,82 +122,82 @@
                 </div>
 
                 <!-- PAYMENT -->
-                <div class="bg-white rounded-2xl border shadow-sm p-6">
+<!--                <div class="bg-white rounded-2xl border shadow-sm p-6">-->
 
-                    <div class="flex items-center gap-4 mb-6">
-                        <div
-                                class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold"
-                        >
-                            2
-                        </div>
+<!--                    <div class="flex items-center gap-4 mb-6">-->
+<!--                        <div-->
+<!--                                class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold"-->
+<!--                        >-->
+<!--                            2-->
+<!--                        </div>-->
 
-                        <div>
-                            <p class="text-sm text-gray-500">
-                                Payment
-                            </p>
+<!--                        <div>-->
+<!--                            <p class="text-sm text-gray-500">-->
+<!--                                Payment-->
+<!--                            </p>-->
 
-                            <h2 class="text-2xl font-bold">
-                                QR Code Payment
-                            </h2>
-                        </div>
-                    </div>
+<!--                            <h2 class="text-2xl font-bold">-->
+<!--                                QR Code Payment-->
+<!--                            </h2>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <div class="grid md:grid-cols-2 gap-8 items-center">
+<!--                    <div class="grid md:grid-cols-2 gap-8 items-center">-->
 
-                        <div class="flex justify-center">
-                            <div class="bg-gray-50 p-4 rounded-2xl border">
-                                <img
-                                        class="w-60 h-60"
-                                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MarketStorePayment"
-                                        alt="QR Code"
-                                >
-                            </div>
-                        </div>
+<!--                        <div class="flex justify-center">-->
+<!--                            <div class="bg-gray-50 p-4 rounded-2xl border">-->
+<!--                                <img-->
+<!--                                        class="w-60 h-60"-->
+<!--                                        src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=MarketStorePayment"-->
+<!--                                        alt="QR Code"-->
+<!--                                >-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                        <div class="space-y-4">
+<!--                        <div class="space-y-4">-->
 
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">
-                                    Amount
-                                </span>
+<!--                            <div class="flex justify-between">-->
+<!--                                <span class="text-gray-500">-->
+<!--                                    Amount-->
+<!--                                </span>-->
 
-                                <strong>
-                                    ${{ "%.2f" | format(total) }}
-                                </strong>
-                            </div>
+<!--                                <strong>-->
+<!--                                    ${{ "%.2f" | format(total) }}-->
+<!--                                </strong>-->
+<!--                            </div>-->
 
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">
-                                    Method
-                                </span>
+<!--                            <div class="flex justify-between">-->
+<!--                                <span class="text-gray-500">-->
+<!--                                    Method-->
+<!--                                </span>-->
 
-                                <strong>
-                                    QR Bank Transfer
-                                </strong>
-                            </div>
+<!--                                <strong>-->
+<!--                                    QR Bank Transfer-->
+<!--                                </strong>-->
+<!--                            </div>-->
 
-                            <div class="flex justify-between">
-                                <span class="text-gray-500">
-                                    Reference
-                                </span>
+<!--                            <div class="flex justify-between">-->
+<!--                                <span class="text-gray-500">-->
+<!--                                    Reference-->
+<!--                                </span>-->
 
-                                <strong>
-                                    MS-2026-1549
-                                </strong>
-                            </div>
+<!--                                <strong>-->
+<!--                                    MS-2026-1549-->
+<!--                                </strong>-->
+<!--                            </div>-->
 
-                            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4">
-                                <p class="text-sm text-indigo-700">
-                                    Scan the QR code using your banking app.
-                                    After payment, click Confirm Order below.
-                                </p>
-                            </div>
+<!--                            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-4">-->
+<!--                                <p class="text-sm text-indigo-700">-->
+<!--                                    Scan the QR code using your banking app.-->
+<!--                                    After payment, click Confirm Order below.-->
+<!--                                </p>-->
+<!--                            </div>-->
 
-                        </div>
+<!--                        </div>-->
 
-                    </div>
+<!--                    </div>-->
 
-                </div>
+<!--                </div>-->
 
             </div>
 
